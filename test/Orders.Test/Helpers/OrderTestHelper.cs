@@ -3,7 +3,7 @@ using Orders.Web.Models.Enums;
 
 namespace Orders.Test.Helpers;
 
-public static class OrderTestHelper
+internal static class OrderTestHelper
 {
     internal static List<Order> GetTestOrders()
     {
