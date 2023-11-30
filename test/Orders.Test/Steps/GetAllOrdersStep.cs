@@ -54,10 +54,10 @@ public class GetAllOrdersStep
     [Then(@"the system returns a list of all the orders")]
     public async Task ThenTheSystemReturnsAListOfAllOrders()
     {
-        //Test the response status code
+        //Assert the response status code
         _response!.StatusCode.Should().Be(HttpStatusCode.OK); //Expects 200 OK
         
-        //Test the response content
+        //Assert the response content
         var responseContent = await _response.Content.ReadAsStringAsync();
         var ordersFromResponse = JsonConvert.DeserializeObject<List<Order>>(responseContent);
         var expectedOrdersCount = OrderTestHelper.GetTestOrders().Count;

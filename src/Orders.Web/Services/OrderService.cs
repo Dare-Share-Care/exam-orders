@@ -41,6 +41,21 @@ public class OrderService : IOrderService
         return orderViewModels;
     }
 
+    public async Task<List<OrderToClaimViewModel>> GetInProgressOrdersAsync()
+    {
+        var orders = await _orderReadRepository.ListAsync(new InProgressOrdersSpec());
+
+        var orderViewModels = orders.Select(order => new OrderToClaimViewModel
+        {
+            Id = order.Id,
+            Status = order.Status,
+            CreatedDate = order.CreatedDate,
+            DeliveryAddress = "TODO",
+        }).ToList();
+
+        return orderViewModels;
+    }
+
     public Task<OrderViewModel> GetOrderAsync(int id)
     {
         throw new NotImplementedException();

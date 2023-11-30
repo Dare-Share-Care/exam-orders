@@ -1,8 +1,9 @@
 using Orders.Web.Entities;
+using Orders.Web.Models.Enums;
 
 namespace Orders.Test.Helpers;
 
-public static class OrderTestHelper
+internal static class OrderTestHelper
 {
     internal static List<Order> GetTestOrders()
     {
@@ -16,9 +17,33 @@ public static class OrderTestHelper
 
         var orders = new List<Order>
         {
-            new Order { Id = 1, UserId = 1, CreatedDate = DateTime.Now, TotalPrice = 100, OrderLines = orderLines },
-            new Order { Id = 2, UserId = 2, CreatedDate = DateTime.Now, TotalPrice = 200, OrderLines = orderLines },
-            new Order { Id = 3, UserId = 3, CreatedDate = DateTime.Now, TotalPrice = 300, OrderLines = orderLines }
+            new Order
+            {
+                Id = 1,
+                UserId = 1,
+                CreatedDate = DateTime.Now,
+                TotalPrice = 100,
+                OrderLines = orderLines,
+                Status = OrderStatus.New
+            },
+            new Order
+            {
+                Id = 2,
+                UserId = 2,
+                CreatedDate = DateTime.Now,
+                TotalPrice = 200,
+                OrderLines = orderLines,
+                Status = OrderStatus.InProgress
+            },
+            new Order
+            {
+                Id = 3,
+                UserId = 3,
+                CreatedDate = DateTime.Now,
+                TotalPrice = 300,
+                OrderLines = orderLines,
+                Status = OrderStatus.InProgress
+            }
         };
         return orders;
     }

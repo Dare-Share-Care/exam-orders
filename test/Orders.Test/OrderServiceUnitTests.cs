@@ -4,6 +4,7 @@ using Orders.Test.Helpers;
 using Orders.Web.Entities;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Repositories;
+using Orders.Web.Models.Enums;
 using Orders.Web.Services;
 
 namespace Orders.Test;
@@ -33,7 +34,26 @@ public class OrderServiceUnitTests
         var result = await _orderService.GetOrdersAsync();
 
         // Assert
-        Assert.NotNull(result); // Test if null
-        Assert.Equal(3, result.Count); // We expect 3 orders
+        Assert.NotNull(result); //Test if null
+        Assert.Equal(3, result.Count); //We expect 3 orders
+    }
+
+    [Fact]
+    public async Task GetInProgressOrdersAsync_ReturnsListOfOrders()
+    {
+        // Arrange
+        var testOrders = OrderTestHelper.GetTestOrders()
+            .Where(x => x.Status == OrderStatus.InProgress).ToList();
+
+        //Mock repository and specification
+        _mockOrderReadRepository.Setup(x => x.ListAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
+            .ReturnsAsync(testOrders);
+
+        // Act
+        var result = await _orderService.GetInProgressOrdersAsync();
+
+        // Assert
+        Assert.NotNull(result); //Test if null
+        Assert.Equal(2, result.Count); //We expect 2 orders (order 2 and 3)
     }
 }
