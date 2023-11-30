@@ -41,6 +41,11 @@ public class OrderService : IOrderService
         return orderViewModels;
     }
 
+    public async Task<List<OrderToClaimViewModel>> GetInProgressOrdersAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<OrderViewModel> GetOrderAsync(int id)
     {
         throw new NotImplementedException();
