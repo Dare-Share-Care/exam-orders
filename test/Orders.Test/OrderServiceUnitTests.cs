@@ -4,6 +4,7 @@ using Orders.Test.Helpers;
 using Orders.Web.Entities;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Repositories;
+using Orders.Web.Models.Enums;
 using Orders.Web.Services;
 
 namespace Orders.Test;
@@ -41,7 +42,8 @@ public class OrderServiceUnitTests
     public async Task GetInProgressOrdersAsync_ReturnsListOfOrders()
     {
         // Arrange
-        var testOrders = OrderTestHelper.GetTestOrders();
+        var testOrders = OrderTestHelper.GetTestOrders()
+            .Where(x => x.Status == OrderStatus.InProgress).ToList();
 
         //Mock repository and specification
         _mockOrderReadRepository.Setup(x => x.ListAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
