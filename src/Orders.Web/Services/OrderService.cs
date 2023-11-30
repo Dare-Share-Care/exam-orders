@@ -2,6 +2,7 @@ using Orders.Web.Entities;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Repositories;
 using Orders.Web.Models.ViewModels;
+using Orders.Web.Specifications;
 
 namespace Orders.Web.Services;
 
@@ -16,9 +17,28 @@ public class OrderService : IOrderService
         _orderReadRepository = orderReadRepository;
     }
 
-    public Task<List<OrderViewModel>> GetOrdersAsync()
+    public async Task<List<OrderViewModel>> GetOrdersAsync()
     {
-        throw new NotImplementedException();
+        //Get orders with order lines from the database
+        var orders = await _orderReadRepository.ListAsync(new OrdersAndOrderLinesSpec());
+
+        //Map the orders to the view model
+        var orderViewModels = orders.Select(order => new OrderViewModel
+        {
+            Id = order.Id,
+            UserId = order.UserId,
+            CreatedDate = order.CreatedDate,
+            TotalPrice = order.TotalPrice,
+            OrderLines = order.OrderLines.Select(orderLine => new OrderLineViewModel
+            {
+                MenuItemName = "TODO",
+                MenuItemId = orderLine.MenuItemId,
+                Quantity = orderLine.Quantity,
+                Price = orderLine.Price
+            }).ToList()
+        }).ToList();
+
+        return orderViewModels;
     }
 
     public Task<OrderViewModel> GetOrderAsync(int id)

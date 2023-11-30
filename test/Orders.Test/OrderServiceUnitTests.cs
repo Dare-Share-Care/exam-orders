@@ -1,3 +1,4 @@
+using Ardalis.Specification;
 using Moq;
 using Orders.Web.Entities;
 using Orders.Web.Interfaces.DomainServices;
@@ -24,7 +25,8 @@ public class OrderServiceUnitTests
         // Arrange
         var testOrders = GetTestOrders();
 
-        _mockOrderReadRepository.Setup(x => x.ListAsync(new CancellationToken()))
+        //Mock repository and specification
+        _mockOrderReadRepository.Setup(x => x.ListAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
             .ReturnsAsync(testOrders);
 
         // Act
