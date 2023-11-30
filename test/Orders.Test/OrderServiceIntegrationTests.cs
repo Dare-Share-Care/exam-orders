@@ -57,7 +57,7 @@ public class OrderServiceIntegrationTests : IDisposable
         
         // Assert
         Assert.NotNull(result); // Test if null
-        Assert.Equal(3, result.Count); // We expect 2 orders, order 2 and 3
+        Assert.Equal(2, result.Count); // We expect 2 orders, order 2 and 3
     }
 
     public void Dispose()
