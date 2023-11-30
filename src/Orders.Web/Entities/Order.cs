@@ -1,0 +1,12 @@
+using Orders.Web.Models.Enums;
+
+namespace Orders.Web.Entities;
+
+public class Order : BaseEntity
+{
+    public long UserId { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public OrderStatus Status { get; set; }
+    public decimal TotalPrice { get; set; }
+    public List<OrderLine> OrderLines { get; set; } = new();
+}
