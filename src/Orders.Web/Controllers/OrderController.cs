@@ -3,7 +3,7 @@ using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Models.ViewModels;
 
 namespace Orders.Web.Controllers;
-    
+
 [ApiController]
 [Route("api/[controller]")]
 public class OrderController : ControllerBase
@@ -14,11 +14,19 @@ public class OrderController : ControllerBase
     {
         _orderService = orderService;
     }
-    
+
     [HttpGet("all")]
     public async Task<ActionResult<List<OrderViewModel>>> GetOrdersAsync()
     {
         var orders = await _orderService.GetOrdersAsync();
         return Ok(orders);
     }
+
+    [HttpGet("ready-for-delivery")]
+    public async Task<ActionResult<List<OrderViewModel>>> GetOrdersReadyForDeliveryAsync()
+    {
+        var orders = await _orderService.GetInProgressOrdersAsync();
+        return Ok(orders);
+    }
+
 }
