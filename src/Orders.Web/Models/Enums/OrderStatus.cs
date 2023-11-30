@@ -4,5 +4,6 @@ public enum OrderStatus
 {
     New = 0,
     InProgress = 1,
-    Completed = 2
+    InDelivery = 2,
+    Completed = 3
 }
