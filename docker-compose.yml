@@ -1,0 +1,17 @@
+﻿version: '3.8'
+
+services:
+  mtogo.auth:
+    container_name: mtogo-orders
+    image: mtogo.orders
+    build:
+      context: .
+      dockerfile: src/Orders.Web/Dockerfile
+    ports:
+      - "8085:80"
+    networks:
+      - kafka
+
+networks:
+  kafka:
+    external: true
