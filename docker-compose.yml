@@ -1,7 +1,7 @@
 ﻿version: '3.8'
 
 services:
-  mtogo.auth:
+  mtogo.orders:
     container_name: mtogo-orders
     image: mtogo.orders
     build:
