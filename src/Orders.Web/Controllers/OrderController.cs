@@ -28,5 +28,11 @@ public class OrderController : ControllerBase
         var orders = await _orderService.GetInProgressOrdersAsync();
         return Ok(orders);
     }
-
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<OrderViewModel>> GetOrderAsync(int id)
+    {
+        var order = await _orderService.GetOrderAsync(id);
+        return Ok(order);
+    }
 }
