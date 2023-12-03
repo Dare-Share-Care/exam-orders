@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option csharp_namespace = "RestaurantNamespace";
+
+// Define the service
+service Catalogue {
+    rpc SendCatalogue(RestaurantRequest) returns (RestaurantResponse);
+}
+
+// Define request and response messages
+message RestaurantRequest {
+    int64 restaurant_id = 1;
+}
+
+message MenuItem {
+    int64 id = 1;
+    string name = 2;
+    float price = 3;
+}
+
+message Restauranten {
+    int64 id = 1;
+    repeated MenuItem menu = 2;
+}
+
+message RestaurantResponse {
+    Restauranten restaurant = 1;
+}
