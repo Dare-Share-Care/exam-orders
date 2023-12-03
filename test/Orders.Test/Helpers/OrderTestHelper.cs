@@ -57,4 +57,33 @@ internal static class OrderTestHelper
         };
         return orders;
     }
+
+    internal static Order GetTestOrder()
+    {
+        var orderLines = new List<OrderLine>
+        {
+            new OrderLine { Id = 1, OrderId = 1, MenuItemId = 1, Quantity = 1, Price = 100 },
+            new OrderLine { Id = 2, OrderId = 2, MenuItemId = 2, Quantity = 2, Price = 200 },
+            new OrderLine { Id = 3, OrderId = 3, MenuItemId = 3, Quantity = 3, Price = 300 }
+        };
+        
+        var deliveryAddress = new Address
+        {
+            Street = "Test street",
+            City = "Test city",
+            ZipCode = 1234
+        };
+
+        var order = new Order
+        {
+            Id = 4,
+            UserId = 1,
+            CreatedDate = DateTime.Now,
+            TotalPrice = 100,
+            OrderLines = orderLines,
+            Status = OrderStatus.New,
+            DeliveryAddress = deliveryAddress
+        };
+        return order;
+    }
 }

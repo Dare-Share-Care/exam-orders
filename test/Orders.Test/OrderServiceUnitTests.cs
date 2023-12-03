@@ -4,6 +4,7 @@ using Orders.Test.Helpers;
 using Orders.Web.Entities;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Repositories;
+using Orders.Web.Models.Dto;
 using Orders.Web.Models.Enums;
 using Orders.Web.Services;
 
@@ -18,7 +19,8 @@ public class OrderServiceUnitTests
 
     public OrderServiceUnitTests()
     {
-        _orderService = new OrderService(_mockOrderRepository.Object, _mockOrderReadRepository.Object, _mockCatalogueService.Object);
+        _orderService = new OrderService(_mockOrderRepository.Object, _mockOrderReadRepository.Object,
+            _mockCatalogueService.Object);
     }
 
     [Fact]
@@ -57,7 +59,7 @@ public class OrderServiceUnitTests
         Assert.NotNull(result); //Test if null
         Assert.Equal(2, result.Count); //We expect 2 orders (order 2 and 3)
     }
-    
+
     [Fact]
     public async Task GetOrderAsync_ReturnsOrder()
     {
@@ -65,7 +67,8 @@ public class OrderServiceUnitTests
         var testOrders = OrderTestHelper.GetTestOrders();
 
         //Mock repository and specification
-        _mockOrderReadRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
+        _mockOrderReadRepository
+            .Setup(x => x.FirstOrDefaultAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
             .ReturnsAsync(testOrders[0]);
 
         // Act
@@ -75,7 +78,7 @@ public class OrderServiceUnitTests
         Assert.NotNull(result); //Test if null
         Assert.Equal(1, result.Id); //We expect order with id 1
     }
-    
+
     [Fact]
     public async Task GetOrderAsync_ReturnsNull()
     {
@@ -91,5 +94,37 @@ public class OrderServiceUnitTests
 
         // Assert
         Assert.Null(result); //Test if null
+    }
+
+    [Fact]
+    public async Task CreateOrderAsync_ReturnsOrder()
+    {
+        // Arrange
+        var dto = new CreateOrderDto
+        {
+            RestaurantId = 1,
+            UserId = 1,
+
+            Lines = new List<CreateOrderLineDto>
+            {
+                new CreateOrderLineDto()
+                {
+                    MenuItemId = 1,
+                    Quantity = 1
+                },
+                new CreateOrderLineDto()
+                {
+                    MenuItemId = 2,
+                    Quantity = 2
+                }
+            }
+        };
+
+        // Act
+        var result = await _orderService.CreateOrderAsync(dto);
+
+        // Assert
+        Assert.NotNull(result); //Test if null
+        Assert.Equal(1, result.Id); //We expect order with id 1
     }
 }
