@@ -8,6 +8,7 @@ public sealed class InProgressOrdersSpec : Specification<Order>
 {
     public InProgressOrdersSpec()
     {
-        Query.Where(order => order.Status == OrderStatus.InProgress);
+        Query.Where(order => order.Status == OrderStatus.InProgress)
+            .Include(order => order.DeliveryAddress);
     }
 }

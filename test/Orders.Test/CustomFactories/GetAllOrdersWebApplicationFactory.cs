@@ -6,7 +6,7 @@ using Orders.Web.Data;
 
 namespace Orders.Test.CustomFactories;
 
-public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
+public class GetAllOrdersWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -26,7 +26,7 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
             // Add DbContext using an in-memory database for testing.
             services.AddDbContext<OrderContext>(options =>
             {
-                options.UseInMemoryDatabase("APITestDb");
+                options.UseInMemoryDatabase("GetAllOrders");
             });
         });
     }
