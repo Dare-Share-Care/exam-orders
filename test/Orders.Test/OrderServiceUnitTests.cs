@@ -2,6 +2,7 @@ using Ardalis.Specification;
 using Moq;
 using Orders.Test.Helpers;
 using Orders.Web.Entities;
+using Orders.Web.Exceptions;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Repositories;
 using Orders.Web.Models.Dto;
@@ -138,5 +139,44 @@ public class OrderServiceUnitTests
         // Assert
         Assert.NotNull(result); //Test if null
         Assert.Equal(400, result.TotalPrice); //We expect a totl price of 400 (100 + 150 * 2)
+    }
+    
+    [Fact]
+    public async Task CreateOrderAsync_WhenInvalidMenuItems_ThrowsInvalidMenuItemException()
+    {
+        // Arrange
+        var dto = new CreateOrderDto
+        {
+            RestaurantId = 1,
+            UserId = 1,
+
+            Lines = new List<CreateOrderLineDto>
+            {
+                new CreateOrderLineDto()
+                {
+                    MenuItemId = 1,
+                    Quantity = 1
+                },
+                new CreateOrderLineDto()
+                {
+                    MenuItemId = 3, //Invalid menu item, doesn't exist in the catalogue
+                    Quantity = 2
+                }
+            }
+        };
+        
+        _mockCatalogueService.Setup(c => c.GetCatalogueAsync(It.IsAny<long>()))
+            .ReturnsAsync(new CatalogueViewModel
+            {
+                RestaurantId = 1,
+                Menu = new List<MenuItemViewModel>
+                {
+                    new MenuItemViewModel { Id = 1, Name = "Item 1", Price = 100 },
+                    new MenuItemViewModel { Id = 2, Name = "Item 2", Price = 150 }
+                }
+            });
+        
+        //Act + Assert
+        await Assert.ThrowsAsync<InvalidMenuItemException>(() => _orderService.CreateOrderAsync(dto));
     }
 }
