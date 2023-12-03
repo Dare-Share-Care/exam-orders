@@ -16,6 +16,7 @@ public class CatalogueService : ICatalogueService
         _configuration = configuration;
     }
 
+    // Empty constructor is for unit testing / easier mocking
     public CatalogueService()
     {
         

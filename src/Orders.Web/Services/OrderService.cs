@@ -1,11 +1,11 @@
 using Orders.Web.Entities;
+using Orders.Web.Exceptions;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Repositories;
 using Orders.Web.Models.Dto;
+using Orders.Web.Models.Enums;
 using Orders.Web.Models.ViewModels;
 using Orders.Web.Specifications;
-using RestaurantNamespace;
-
 
 namespace Orders.Web.Services;
 
@@ -36,7 +36,7 @@ public class OrderService : IOrderService
             TotalPrice = order.TotalPrice,
             OrderLines = order.OrderLines.Select(orderLine => new OrderLineViewModel
             {
-                MenuItemName = "TODO",
+                MenuItemName = orderLine.MenuItemName!,
                 MenuItemId = orderLine.MenuItemId,
                 Quantity = orderLine.Quantity,
                 Price = orderLine.Price
@@ -81,7 +81,7 @@ public class OrderService : IOrderService
                 TotalPrice = order.TotalPrice,
                 OrderLines = order.OrderLines.Select(orderLine => new OrderLineViewModel
                 {
-                    MenuItemName = orderLine.MenuItemName,
+                    MenuItemName = orderLine.MenuItemName!,
                     MenuItemId = orderLine.MenuItemId,
                     Quantity = orderLine.Quantity,
                     Price = orderLine.Price
@@ -95,8 +95,61 @@ public class OrderService : IOrderService
         return null!;
     }
 
-    public Task<OrderViewModel> CreateOrderAsync(CreateOrderDto dto)
+    public async Task<OrderViewModel> CreateOrderAsync(CreateOrderDto dto)
     {
-        throw new NotImplementedException();
+        //Get the catalogue from the selected restaurant, must have RestaurantService running
+        var catalogue = await _catalogueService.GetCatalogueAsync(dto.RestaurantId);
+        
+        if(catalogue == null)
+        {
+            throw new InvalidCatalogueException("Restaurant doesn't exist or service is down");
+        }
+        
+        //Validate items exists in the catalogue
+        var itemIds = catalogue.Menu.Select(item => item.Id).ToList();
+        var itemsExists = dto.Lines.All(orderLine => itemIds.Contains(orderLine.MenuItemId));
+        
+        //Create the order
+        if (itemsExists)
+        {
+            var order = new Order
+            {
+                UserId = dto.UserId,
+                CreatedDate = DateTime.UtcNow,
+                Status = OrderStatus.New,
+                OrderLines = dto.Lines.Select(line => new OrderLine
+                {
+                    MenuItemId = line.MenuItemId,
+                    MenuItemName = catalogue.Menu.Single(item => item.Id == line.MenuItemId).Name,
+                    Price = catalogue.Menu.Single(item => item.Id == line.MenuItemId).Price * line.Quantity,
+                    Quantity = line.Quantity
+                }).ToList(),
+                TotalPrice = dto.Lines.Sum(line => catalogue.Menu.Single(item => item.Id == line.MenuItemId).Price * line.Quantity)
+            };
+            
+            //Save order
+            await _orderRepository.AddAsync(order);
+            await _orderRepository.SaveChangesAsync();
+            
+            //Map the order to the view model
+            var orderViewModel = new OrderViewModel
+            {
+                Id = order.Id,
+                UserId = order.UserId,
+                CreatedDate = order.CreatedDate,
+                Status = order.Status,
+                TotalPrice = order.TotalPrice,
+                OrderLines = order.OrderLines.Select(orderLine => new OrderLineViewModel
+                {
+                    MenuItemName = orderLine.MenuItemName!,
+                    MenuItemId = orderLine.MenuItemId,
+                    Quantity = orderLine.Quantity,
+                    Price = orderLine.Price
+                }).ToList()
+            };
+            
+            return orderViewModel;
+        }
+        throw new InvalidMenuItemException("One or more items doesn't exist in the chosen catalogue");
     }
 }
