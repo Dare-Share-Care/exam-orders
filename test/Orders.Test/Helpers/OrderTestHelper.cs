@@ -1,4 +1,5 @@
 using Orders.Web.Entities;
+using Orders.Web.Models.Dto;
 using Orders.Web.Models.Enums;
 
 namespace Orders.Test.Helpers;
@@ -14,7 +15,7 @@ internal static class OrderTestHelper
             new OrderLine { Id = 2, OrderId = 2, MenuItemId = 2, Quantity = 2, Price = 200 },
             new OrderLine { Id = 3, OrderId = 3, MenuItemId = 3, Quantity = 3, Price = 300 }
         };
-        
+
         var deliveryAddress = new Address
         {
             Street = "Test street",

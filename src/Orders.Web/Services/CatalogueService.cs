@@ -9,11 +9,17 @@ namespace Orders.Web.Services;
 
 public class CatalogueService : ICatalogueService
 {
-    private readonly IConfiguration _configuration;
+    private readonly IConfiguration _configuration = null!;
 
     public CatalogueService(IConfiguration configuration)
     {
         _configuration = configuration;
+    }
+
+    // Empty constructor is for unit testing / easier mocking
+    public CatalogueService()
+    {
+        
     }
 
     public async Task<CatalogueViewModel> GetCatalogueAsync(long restaurantId)

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Orders.Test.Helpers;
 using Orders.Web.Data;
@@ -25,7 +26,8 @@ public class OrderServiceIntegrationTests : IDisposable
     {
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
-        var orderService = new OrderService(orderRepository, orderRepository);
+        var catalogueService = new CatalogueService(new ConfigurationManager());
+        var orderService = new OrderService(orderRepository, orderRepository, catalogueService);
         
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();
@@ -45,7 +47,8 @@ public class OrderServiceIntegrationTests : IDisposable
     {
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
-        var orderService = new OrderService(orderRepository, orderRepository);
+        var catalogueService = new CatalogueService(new ConfigurationManager());
+        var orderService = new OrderService(orderRepository, orderRepository, catalogueService);
         
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();
