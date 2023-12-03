@@ -1,6 +1,7 @@
 using Orders.Web.Entities;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Repositories;
+using Orders.Web.Models.Dto;
 using Orders.Web.Models.ViewModels;
 using Orders.Web.Specifications;
 using RestaurantNamespace;
@@ -90,5 +91,10 @@ public class OrderService : IOrderService
         
         //Return null if order is not found
         return null!;
+    }
+
+    public Task<OrderViewModel> CreateOrderAsync(CreateOrderDto dto)
+    {
+        throw new NotImplementedException();
     }
 }
