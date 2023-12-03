@@ -13,11 +13,13 @@ public class OrderService : IOrderService
 {
     private readonly IRepository<Order> _orderRepository;
     private readonly IReadRepository<Order> _orderReadRepository;
+    private readonly ICatalogueService _catalogueService;
 
-    public OrderService(IRepository<Order> orderRepository, IReadRepository<Order> orderReadRepository)
+    public OrderService(IRepository<Order> orderRepository, IReadRepository<Order> orderReadRepository, ICatalogueService catalogueService)
     {
         _orderRepository = orderRepository;
         _orderReadRepository = orderReadRepository;
+        _catalogueService = catalogueService;
     }
 
     public async Task<List<OrderViewModel>> GetOrdersAsync()

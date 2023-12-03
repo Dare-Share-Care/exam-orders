@@ -14,10 +14,11 @@ public class OrderServiceUnitTests
     private readonly IOrderService _orderService;
     private readonly Mock<IRepository<Order>> _mockOrderRepository = new();
     private readonly Mock<IReadRepository<Order>> _mockOrderReadRepository = new();
+    private readonly Mock<CatalogueService> _mockCatalogueService = new();
 
     public OrderServiceUnitTests()
     {
-        _orderService = new OrderService(_mockOrderRepository.Object, _mockOrderReadRepository.Object);
+        _orderService = new OrderService(_mockOrderRepository.Object, _mockOrderReadRepository.Object, _mockCatalogueService.Object);
     }
 
     [Fact]
