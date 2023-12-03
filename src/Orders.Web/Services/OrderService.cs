@@ -81,7 +81,7 @@ public class OrderService : IOrderService
                 TotalPrice = order.TotalPrice,
                 OrderLines = order.OrderLines.Select(orderLine => new OrderLineViewModel
                 {
-                    MenuItemName = "TODO",
+                    MenuItemName = orderLine.MenuItemName,
                     MenuItemId = orderLine.MenuItemId,
                     Quantity = orderLine.Quantity,
                     Price = orderLine.Price
