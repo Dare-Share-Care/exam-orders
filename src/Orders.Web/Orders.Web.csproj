@@ -14,14 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\catalogue.proto">
-            <GrpcServices>Server</GrpcServices>
-            <Access>Public</Access>
-            <ProtoCompile>True</ProtoCompile>
-            <CompileOutputs>True</CompileOutputs>
-            <OutputDir>obj\Debug\net7.0\</OutputDir>
-            <Generator>MSBuild:Compile</Generator>
-        </Protobuf>
+        <Protobuf Include="Protos\catalogue.proto" GrpcServices="Client"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -45,10 +38,4 @@
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0"/>
     </ItemGroup>
-
-    <ItemGroup>
-        <Protobuf Include="Protos\catalogue.proto" GrpcServices="Client"/>
-    </ItemGroup>
-
-
 </Project>
