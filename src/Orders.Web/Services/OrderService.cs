@@ -50,7 +50,12 @@ public class OrderService : IOrderService
             Id = order.Id,
             Status = order.Status,
             CreatedDate = order.CreatedDate,
-            DeliveryAddress = "TODO",
+            DeliveryAddress = new DeliveryAddressViewModel
+            {
+                Street = order.DeliveryAddress.Street,
+                City = order.DeliveryAddress.City,
+                ZipCode = order.DeliveryAddress.ZipCode,
+            }
         }).ToList();
 
         return orderViewModels;

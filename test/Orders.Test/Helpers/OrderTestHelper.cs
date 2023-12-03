@@ -14,6 +14,13 @@ internal static class OrderTestHelper
             new OrderLine { Id = 2, OrderId = 2, MenuItemId = 2, Quantity = 2, Price = 200 },
             new OrderLine { Id = 3, OrderId = 3, MenuItemId = 3, Quantity = 3, Price = 300 }
         };
+        
+        var deliveryAddress = new Address
+        {
+            Street = "Test street",
+            City = "Test city",
+            ZipCode = 1234
+        };
 
         var orders = new List<Order>
         {
@@ -24,7 +31,8 @@ internal static class OrderTestHelper
                 CreatedDate = DateTime.Now,
                 TotalPrice = 100,
                 OrderLines = orderLines,
-                Status = OrderStatus.New
+                Status = OrderStatus.New,
+                DeliveryAddress = deliveryAddress
             },
             new Order
             {
@@ -33,7 +41,8 @@ internal static class OrderTestHelper
                 CreatedDate = DateTime.Now,
                 TotalPrice = 200,
                 OrderLines = orderLines,
-                Status = OrderStatus.InProgress
+                Status = OrderStatus.InProgress,
+                DeliveryAddress = deliveryAddress
             },
             new Order
             {
@@ -42,7 +51,8 @@ internal static class OrderTestHelper
                 CreatedDate = DateTime.Now,
                 TotalPrice = 300,
                 OrderLines = orderLines,
-                Status = OrderStatus.InProgress
+                Status = OrderStatus.InProgress,
+                DeliveryAddress = deliveryAddress
             }
         };
         return orders;

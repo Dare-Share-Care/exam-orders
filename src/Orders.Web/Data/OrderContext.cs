@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Orders.Web.Entities;
 
 namespace Orders.Web.Data;
@@ -18,6 +19,11 @@ public class OrderContext : DbContext
         modelBuilder.Entity<Order>().HasKey(order => order.Id);
         modelBuilder.Entity<OrderLine>().HasKey(orderLine => orderLine.Id);
         
+        
+        //Add Value Objects
+        modelBuilder.Entity<Address>(ConfigureAddress);
+
+        
         //Properties
         //Order TotalPrice
         modelBuilder.Entity<Order>().Property(order => order.TotalPrice)
@@ -33,5 +39,15 @@ public class OrderContext : DbContext
             .HasMany(order => order.OrderLines)
             .WithOne(orderLine => orderLine.Order)
             .HasForeignKey(orderLine => orderLine.OrderId);
+    }
+    
+    //Address value object
+    void ConfigureAddress<T>(EntityTypeBuilder<T> entity) where T : Address
+    {
+        entity.ToTable("Address", "dbo");
+
+        entity.Property<int>("Id")
+            .IsRequired();
+        entity.HasKey("Id");
     }
 }

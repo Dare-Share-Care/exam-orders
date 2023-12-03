@@ -7,5 +7,5 @@ public class OrderToClaimViewModel
     public long Id { get; set; }
     public OrderStatus Status { get; set; }
     public DateTime CreatedDate { get; set; }
-    public string DeliveryAddress { get; set; } = null!;
+    public DeliveryAddressViewModel DeliveryAddress { get; set; } = null!;
 }
