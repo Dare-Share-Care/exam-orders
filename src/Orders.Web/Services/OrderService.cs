@@ -61,8 +61,32 @@ public class OrderService : IOrderService
         return orderViewModels;
     }
 
-    public Task<OrderViewModel> GetOrderAsync(int id)
+    public async Task<OrderViewModel> GetOrderAsync(int id)
     {
-        throw new NotImplementedException();
+        var order = await _orderReadRepository.FirstOrDefaultAsync(new OrderAndOrderLinesSpec(id));
+        
+        
+        if(order != null)
+        {
+            var orderViewModel = new OrderViewModel
+            {
+                Id = order.Id,
+                UserId = order.UserId,
+                CreatedDate = order.CreatedDate,
+                TotalPrice = order.TotalPrice,
+                OrderLines = order.OrderLines.Select(orderLine => new OrderLineViewModel
+                {
+                    MenuItemName = "TODO",
+                    MenuItemId = orderLine.MenuItemId,
+                    Quantity = orderLine.Quantity,
+                    Price = orderLine.Price
+                }).ToList()
+            };
+
+            return orderViewModel;
+        }
+        
+        //Return null if order is not found
+        return null!;
     }
 }

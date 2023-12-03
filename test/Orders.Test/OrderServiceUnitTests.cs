@@ -82,11 +82,11 @@ public class OrderServiceUnitTests
         var testOrders = OrderTestHelper.GetTestOrders();
 
         //Mock repository and specification
-        _mockOrderReadRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
+        _mockOrderReadRepository.Setup(x => x.GetByIdAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
             .ReturnsAsync(testOrders[0]);
 
         // Act
-        var result = await _orderService.GetOrderAsync(2);
+        var result = await _orderService.GetOrderAsync(4); //There should not be an order with id 4
 
         // Assert
         Assert.Null(result); //Test if null
