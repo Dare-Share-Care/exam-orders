@@ -56,4 +56,39 @@ public class OrderServiceUnitTests
         Assert.NotNull(result); //Test if null
         Assert.Equal(2, result.Count); //We expect 2 orders (order 2 and 3)
     }
+    
+    [Fact]
+    public async Task GetOrderAsync_ReturnsOrder()
+    {
+        // Arrange
+        var testOrders = OrderTestHelper.GetTestOrders();
+
+        //Mock repository and specification
+        _mockOrderReadRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
+            .ReturnsAsync(testOrders[0]);
+
+        // Act
+        var result = await _orderService.GetOrderAsync(1);
+
+        // Assert
+        Assert.NotNull(result); //Test if null
+        Assert.Equal(1, result.Id); //We expect order with id 1
+    }
+    
+    [Fact]
+    public async Task GetOrderAsync_ReturnsNull()
+    {
+        // Arrange
+        var testOrders = OrderTestHelper.GetTestOrders();
+
+        //Mock repository and specification
+        _mockOrderReadRepository.Setup(x => x.FirstOrDefaultAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
+            .ReturnsAsync(testOrders[0]);
+
+        // Act
+        var result = await _orderService.GetOrderAsync(2);
+
+        // Assert
+        Assert.Null(result); //Test if null
+    }
 }
