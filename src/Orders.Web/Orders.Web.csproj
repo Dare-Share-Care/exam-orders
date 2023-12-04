@@ -20,6 +20,7 @@
     <ItemGroup>
         <PackageReference Include="Ardalis.Specification" Version="7.0.0"/>
         <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="7.0.0"/>
+        <PackageReference Include="Confluent.Kafka" Version="2.3.0" />
         <PackageReference Include="Google.Protobuf" Version="3.25.1"/>
         <PackageReference Include="Grpc.Net.Client" Version="2.59.0"/>
         <PackageReference Include="Grpc.Net.ClientFactory" Version="2.59.0"/>

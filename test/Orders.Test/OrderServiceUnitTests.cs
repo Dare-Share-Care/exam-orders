@@ -8,6 +8,7 @@ using Orders.Web.Interfaces.Repositories;
 using Orders.Web.Models.Dto;
 using Orders.Web.Models.Enums;
 using Orders.Web.Models.ViewModels;
+using Orders.Web.Producers;
 using Orders.Web.Services;
 
 namespace Orders.Test;
@@ -18,11 +19,12 @@ public class OrderServiceUnitTests
     private readonly Mock<IRepository<Order>> _mockOrderRepository = new();
     private readonly Mock<IReadRepository<Order>> _mockOrderReadRepository = new();
     private readonly Mock<ICatalogueService> _mockCatalogueService = new();
+    private readonly Mock<KafkaProducer> _mockKafkaProducer = new();
 
     public OrderServiceUnitTests()
     {
         _orderService = new OrderService(_mockOrderRepository.Object, _mockOrderReadRepository.Object,
-            _mockCatalogueService.Object);
+            _mockCatalogueService.Object, _mockKafkaProducer.Object);
     }
 
     [Fact]

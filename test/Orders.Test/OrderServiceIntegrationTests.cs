@@ -8,6 +8,7 @@ using Orders.Web.Entities;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Models.Dto;
 using Orders.Web.Models.ViewModels;
+using Orders.Web.Producers;
 using Orders.Web.Services;
 
 namespace Orders.Test;
@@ -31,7 +32,8 @@ public class OrderServiceIntegrationTests : IDisposable
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
         var catalogueService = new CatalogueService(new ConfigurationManager());
-        var orderService = new OrderService(orderRepository, orderRepository, catalogueService);
+        var kafkaProducerMock = new Mock<KafkaProducer>();
+        var orderService = new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object);
         
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();
@@ -52,7 +54,8 @@ public class OrderServiceIntegrationTests : IDisposable
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
         var catalogueService = new CatalogueService(new ConfigurationManager());
-        var orderService = new OrderService(orderRepository, orderRepository, catalogueService);
+        var kafkaProducerMock = new Mock<KafkaProducer>();
+        var orderService = new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object);
         
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();
@@ -73,7 +76,8 @@ public class OrderServiceIntegrationTests : IDisposable
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
         var catalogueService = new CatalogueService(new ConfigurationManager());
-        var orderService = new OrderService(orderRepository, orderRepository, catalogueService);
+        var kafkaProducerMock = new Mock<KafkaProducer>();
+        var orderService = new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object);
         
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();
@@ -94,7 +98,8 @@ public class OrderServiceIntegrationTests : IDisposable
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
         var catalogueServiceMock = new Mock<ICatalogueService>();
-        var orderService = new OrderService(orderRepository, orderRepository, catalogueServiceMock.Object);
+        var kafkaProducerMock = new Mock<KafkaProducer>();
+        var orderService = new OrderService(orderRepository, orderRepository, catalogueServiceMock.Object, kafkaProducerMock.Object);
         
         var dto = new CreateOrderDto
         {
