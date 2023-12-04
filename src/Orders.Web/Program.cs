@@ -47,7 +47,7 @@ builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
-//Background services
+//Build kafka consumers
 builder.Services.AddHostedService<UpdatedClaimedOrdersConsumer>();
 builder.Services.AddHostedService<UpdatedCompletedOrdersConsumer>();
 
