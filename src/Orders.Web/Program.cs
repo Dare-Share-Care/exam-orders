@@ -38,8 +38,8 @@ builder.Services.AddDbContext<OrderContext>(options =>
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICatalogueService, CatalogueService>();
 
-//Kafka producer
-builder.Services.AddScoped<KafkaProducer>();
+//Build Kafka producers
+builder.Services.AddSingleton<KafkaProducer>();
 
 //Build repositories
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));

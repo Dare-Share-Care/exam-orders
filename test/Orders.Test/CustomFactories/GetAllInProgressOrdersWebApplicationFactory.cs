@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Orders.Web.Data;
+using Orders.Web.Producers;
 
 namespace Orders.Test.CustomFactories;
 
@@ -12,6 +13,9 @@ public class GetAllInProgressOrdersWebApplicationFactory<TStartup> : WebApplicat
     {
         builder.ConfigureServices(services =>
         {
+            
+            //Build Kafka producers
+            services.AddSingleton<KafkaProducer>();
             // Find the service descriptor that registers the DbContext.
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
