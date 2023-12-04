@@ -120,6 +120,12 @@ public class OrderService : IOrderService
                 UserId = dto.UserId,
                 CreatedDate = DateTime.UtcNow,
                 Status = OrderStatus.New,
+                DeliveryAddress = new Address
+                {
+                    Street = dto.DeliveryAddress.Street,
+                    City = dto.DeliveryAddress.City,
+                    ZipCode = dto.DeliveryAddress.ZipCode
+                },
                 OrderLines = dto.Lines.Select(line => new OrderLine
                 {
                     MenuItemId = line.MenuItemId,

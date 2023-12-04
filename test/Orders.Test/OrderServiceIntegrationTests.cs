@@ -105,7 +105,12 @@ public class OrderServiceIntegrationTests : IDisposable
         {
             RestaurantId = 1,
             UserId = 1,
-
+            DeliveryAddress = new DeliveryAddressDto()
+            {
+                Street = "Test street",
+                City = "Test city",
+                ZipCode = 1234
+            },
             Lines = new List<CreateOrderLineDto>
             {
                 new CreateOrderLineDto()

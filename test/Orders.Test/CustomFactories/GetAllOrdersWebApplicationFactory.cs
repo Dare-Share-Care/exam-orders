@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Orders.Web.Data;
-using Orders.Web.Producers;
-
 namespace Orders.Test.CustomFactories;
 
 public class GetAllOrdersWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class

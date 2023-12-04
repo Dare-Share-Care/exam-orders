@@ -108,7 +108,12 @@ public class OrderServiceUnitTests
         {
             RestaurantId = 1,
             UserId = 1,
-
+            DeliveryAddress = new DeliveryAddressDto()
+            {
+                Street = "Test street",
+                City = "Test city",
+                ZipCode = 1234
+            },
             Lines = new List<CreateOrderLineDto>
             {
                 new CreateOrderLineDto()
@@ -123,7 +128,7 @@ public class OrderServiceUnitTests
                 }
             }
         };
-        
+
         _mockCatalogueService.Setup(c => c.GetCatalogueAsync(It.IsAny<long>()))
             .ReturnsAsync(new CatalogueViewModel
             {
@@ -134,10 +139,10 @@ public class OrderServiceUnitTests
                     new MenuItemViewModel { Id = 2, Name = "Item 2", Price = 150 }
                 }
             });
-        
+
         // _mockKafkaProducer.Setup(k => k.ProduceAsync(It.IsAny<string>(), It.IsAny<EmailDto>()))
         //     .Returns(Task.CompletedTask);
-        
+
         // Act
         var result = await _orderService.CreateOrderAsync(dto);
 
@@ -145,7 +150,7 @@ public class OrderServiceUnitTests
         Assert.NotNull(result); //Test if null
         Assert.Equal(400, result.TotalPrice); //We expect a totl price of 400 (100 + 150 * 2)
     }
-    
+
     [Fact]
     public async Task CreateOrderAsync_WhenInvalidMenuItems_ThrowsInvalidMenuItemException()
     {
@@ -169,7 +174,7 @@ public class OrderServiceUnitTests
                 }
             }
         };
-        
+
         _mockCatalogueService.Setup(c => c.GetCatalogueAsync(It.IsAny<long>()))
             .ReturnsAsync(new CatalogueViewModel
             {
@@ -180,7 +185,7 @@ public class OrderServiceUnitTests
                     new MenuItemViewModel { Id = 2, Name = "Item 2", Price = 150 }
                 }
             });
-        
+
         //Act + Assert
         await Assert.ThrowsAsync<InvalidMenuItemException>(() => _orderService.CreateOrderAsync(dto));
     }
