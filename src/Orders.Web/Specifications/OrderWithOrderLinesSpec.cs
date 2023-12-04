@@ -5,7 +5,7 @@ namespace Orders.Web.Specifications;
 
 public sealed class OrderAndOrderLinesSpec : Specification<Order>
 {
-    public OrderAndOrderLinesSpec(int id)
+    public OrderAndOrderLinesSpec(long id)
     {
         Query
             .Where(o => o.Id == id)
