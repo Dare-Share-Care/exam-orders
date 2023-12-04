@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Orders.Web.Consumers;
 using Orders.Web.Data;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Producers;
@@ -45,6 +46,10 @@ builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();
 //Build repositories
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+//Background services
+builder.Services.AddHostedService<UpdatedClaimedOrdersConsumer>();
+builder.Services.AddHostedService<UpdatedCompletedOrdersConsumer>();
 
 //JWT Key
 var key = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!);

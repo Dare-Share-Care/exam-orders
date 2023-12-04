@@ -6,15 +6,15 @@ using Orders.Web.Models.Enums;
 
 namespace Orders.Web.Consumers
 {
-    public class UpdatedClaimedOrdersConsumer : BackgroundService
+    public class UpdatedCompletedOrdersConsumer : BackgroundService
     {
         private const string BootstrapServers = "localhost:9092";
-        private const string GroupId = "mtogo-claimed-deliveries-group";
-        private const string Topic = "mtogo-claimed-deliveries";
+        private const string GroupId = "mtogo-completed-deliveries-group";
+        private const string Topic = "mtogo-completed-deliveries";
 
         private readonly IServiceProvider _serviceProvider;
 
-        public UpdatedClaimedOrdersConsumer(IServiceProvider serviceProvider)
+        public UpdatedCompletedOrdersConsumer(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
@@ -51,7 +51,7 @@ namespace Orders.Web.Consumers
 
                         if (dto != null)
                         {
-                            await orderService.UpdateOrderStatusAsync(dto.OrderId, OrderStatus.InDelivery);
+                            await orderService.UpdateOrderStatusAsync(dto.OrderId, OrderStatus.Completed);
                         }
                     }
                 }
