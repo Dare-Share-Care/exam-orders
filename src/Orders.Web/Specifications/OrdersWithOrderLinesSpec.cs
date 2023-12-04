@@ -3,7 +3,7 @@ using Orders.Web.Entities;
 
 namespace Orders.Web.Specifications;
 
-public class OrdersAndOrderLinesSpec : Specification<Order>
+public sealed class OrdersAndOrderLinesSpec : Specification<Order>
 {
     public OrdersAndOrderLinesSpec()
     {
