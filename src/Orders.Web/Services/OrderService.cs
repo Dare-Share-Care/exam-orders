@@ -141,11 +141,12 @@ public class OrderService : IOrderService
             await _orderRepository.SaveChangesAsync();
             
             //Email details
+            //TODO: Add restaurant details containing menu items to email
             var emailDetails = new EmailDto()
             {
-                To = "user@example.com", //TODO: Get user email from auth service
+                To = dto.UserEmail,
                 Subject = $"MTOGO - Order Confirmation",
-                Body = $"Your order has been placed and is being processed. Your order id is {order.Id},{System.Environment.NewLine}Thank you for using MTOGO!"
+                Body = $"Your order has been placed and is being processed. Your order number is {order.Id},{System.Environment.NewLine}Thank you for using MTOGO!{System.Environment.NewLine}Best Regards,{System.Environment.NewLine}the MTOGO Team"
             };
             
             //Send email
