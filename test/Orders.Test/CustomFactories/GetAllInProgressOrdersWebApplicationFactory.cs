@@ -13,9 +13,6 @@ public class GetAllInProgressOrdersWebApplicationFactory<TStartup> : WebApplicat
     {
         builder.ConfigureServices(services =>
         {
-            
-            //Build Kafka producers
-            services.AddSingleton<KafkaProducer>();
             // Find the service descriptor that registers the DbContext.
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType ==

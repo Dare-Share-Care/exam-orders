@@ -1,11 +1,11 @@
 using Orders.Web.Entities;
 using Orders.Web.Exceptions;
 using Orders.Web.Interfaces.DomainServices;
+using Orders.Web.Interfaces.Producers;
 using Orders.Web.Interfaces.Repositories;
 using Orders.Web.Models.Dto;
 using Orders.Web.Models.Enums;
 using Orders.Web.Models.ViewModels;
-using Orders.Web.Producers;
 using Orders.Web.Specifications;
 
 namespace Orders.Web.Services;
@@ -15,9 +15,9 @@ public class OrderService : IOrderService
     private readonly IRepository<Order> _orderRepository;
     private readonly IReadRepository<Order> _orderReadRepository;
     private readonly ICatalogueService _catalogueService;
-    private readonly KafkaProducer _kafkaProducer;
+    private readonly IKafkaProducer _kafkaProducer;
 
-    public OrderService(IRepository<Order> orderRepository, IReadRepository<Order> orderReadRepository, ICatalogueService catalogueService, KafkaProducer kafkaProducer)
+    public OrderService(IRepository<Order> orderRepository, IReadRepository<Order> orderReadRepository, ICatalogueService catalogueService, IKafkaProducer kafkaProducer)
     {
         _orderRepository = orderRepository;
         _orderReadRepository = orderReadRepository;

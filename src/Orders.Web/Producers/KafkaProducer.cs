@@ -1,9 +1,10 @@
 using System.Text.Json;
 using Confluent.Kafka;
+using Orders.Web.Interfaces.Producers;
 
 namespace Orders.Web.Producers;
 
-public class KafkaProducer : IDisposable
+public class KafkaProducer : IKafkaProducer
 {
     private readonly IProducer<string, string> _producer;
     private const string BootstrapServers = "kafka:9093";

@@ -4,11 +4,11 @@ using Orders.Test.Helpers;
 using Orders.Web.Entities;
 using Orders.Web.Exceptions;
 using Orders.Web.Interfaces.DomainServices;
+using Orders.Web.Interfaces.Producers;
 using Orders.Web.Interfaces.Repositories;
 using Orders.Web.Models.Dto;
 using Orders.Web.Models.Enums;
 using Orders.Web.Models.ViewModels;
-using Orders.Web.Producers;
 using Orders.Web.Services;
 
 namespace Orders.Test;
@@ -19,7 +19,7 @@ public class OrderServiceUnitTests
     private readonly Mock<IRepository<Order>> _mockOrderRepository = new();
     private readonly Mock<IReadRepository<Order>> _mockOrderReadRepository = new();
     private readonly Mock<ICatalogueService> _mockCatalogueService = new();
-    private readonly Mock<KafkaProducer> _mockKafkaProducer = new();
+    private readonly Mock<IKafkaProducer> _mockKafkaProducer = new();
 
     public OrderServiceUnitTests()
     {
@@ -134,6 +134,9 @@ public class OrderServiceUnitTests
                     new MenuItemViewModel { Id = 2, Name = "Item 2", Price = 150 }
                 }
             });
+        
+        // _mockKafkaProducer.Setup(k => k.ProduceAsync(It.IsAny<string>(), It.IsAny<EmailDto>()))
+        //     .Returns(Task.CompletedTask);
         
         // Act
         var result = await _orderService.CreateOrderAsync(dto);

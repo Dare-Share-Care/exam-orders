@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Orders.Web.Data;
 using Orders.Web.Interfaces.DomainServices;
+using Orders.Web.Interfaces.Producers;
 using Orders.Web.Interfaces.Repositories;
 using Orders.Web.Producers;
 using Orders.Web.Services;
@@ -39,7 +40,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICatalogueService, CatalogueService>();
 
 //Build Kafka producers
-builder.Services.AddSingleton<KafkaProducer>();
+builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();
 
 //Build repositories
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
@@ -59,7 +60,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
-                        
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireCustomerRole", policy => policy.RequireRole("Customer"));
@@ -90,4 +91,6 @@ app.MapFallbackToFile("index.html");
 
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{
+}
