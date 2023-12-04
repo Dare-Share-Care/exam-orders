@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Orders.Web.Data;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Interfaces.Repositories;
+using Orders.Web.Producers;
 using Orders.Web.Services;
 
 const string policyName = "AllowOrigin";
@@ -36,6 +37,9 @@ builder.Services.AddDbContext<OrderContext>(options =>
 //Build services
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICatalogueService, CatalogueService>();
+
+//Kafka producer
+builder.Services.AddScoped<KafkaProducer>();
 
 //Build repositories
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));

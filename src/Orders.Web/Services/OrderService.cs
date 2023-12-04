@@ -5,6 +5,7 @@ using Orders.Web.Interfaces.Repositories;
 using Orders.Web.Models.Dto;
 using Orders.Web.Models.Enums;
 using Orders.Web.Models.ViewModels;
+using Orders.Web.Producers;
 using Orders.Web.Specifications;
 
 namespace Orders.Web.Services;
@@ -14,12 +15,14 @@ public class OrderService : IOrderService
     private readonly IRepository<Order> _orderRepository;
     private readonly IReadRepository<Order> _orderReadRepository;
     private readonly ICatalogueService _catalogueService;
+    private readonly KafkaProducer _kafkaProducer;
 
-    public OrderService(IRepository<Order> orderRepository, IReadRepository<Order> orderReadRepository, ICatalogueService catalogueService)
+    public OrderService(IRepository<Order> orderRepository, IReadRepository<Order> orderReadRepository, ICatalogueService catalogueService, KafkaProducer kafkaProducer)
     {
         _orderRepository = orderRepository;
         _orderReadRepository = orderReadRepository;
         _catalogueService = catalogueService;
+        _kafkaProducer = kafkaProducer;
     }
 
     public async Task<List<OrderViewModel>> GetOrdersAsync()
@@ -130,6 +133,17 @@ public class OrderService : IOrderService
             //Save order
             await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
+            
+            //Email details
+            var emailDetails = new EmailDto()
+            {
+                To = "user@example.com", //TODO: Get user email from auth service
+                Subject = $"MTOGO - Order Confirmation",
+                Body = $"Your order has been placed and is being processed. Your order id is {order.Id}, {System.Environment.NewLine} Thank you for using MTOGO!"
+            };
+            
+            //Send email
+            await _kafkaProducer.ProduceAsync("mtogo-send-email", emailDetails);
             
             //Map the order to the view model
             var orderViewModel = new OrderViewModel
