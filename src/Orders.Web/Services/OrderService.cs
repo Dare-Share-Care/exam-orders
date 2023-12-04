@@ -145,7 +145,7 @@ public class OrderService : IOrderService
             {
                 To = "user@example.com", //TODO: Get user email from auth service
                 Subject = $"MTOGO - Order Confirmation",
-                Body = $"Your order has been placed and is being processed. Your order id is {order.Id}, {System.Environment.NewLine} Thank you for using MTOGO!"
+                Body = $"Your order has been placed and is being processed. Your order id is {order.Id},{System.Environment.NewLine}Thank you for using MTOGO!"
             };
             
             //Send email

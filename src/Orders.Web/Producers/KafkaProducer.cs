@@ -7,7 +7,7 @@ namespace Orders.Web.Producers;
 public class KafkaProducer : IKafkaProducer
 {
     private readonly IProducer<string, string> _producer;
-    private const string BootstrapServers = "kafka:9093";
+    private const string BootstrapServers = "localhost:9092";
     
     public KafkaProducer()
     {
