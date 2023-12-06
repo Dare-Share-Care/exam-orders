@@ -9,6 +9,7 @@ public sealed class OrderAndOrderLinesSpec : Specification<Order>
     {
         Query
             .Where(o => o.Id == id)
-            .Include(o => o.OrderLines);
+            .Include(o => o.OrderLines)
+            .Include(order => order.DeliveryAddress);
     }
 }

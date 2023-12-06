@@ -43,4 +43,11 @@ public class OrderController : ControllerBase
         var order = await _orderService.CreateOrderAsync(dto);
         return Ok(order);
     }
+    
+    [HttpGet("customer/{id}")]
+    public async Task<ActionResult<OrderViewModel>> GetCompletedOrdersByUserId(int id)
+    {
+        var order = await _orderService.GetCustomersCompletedOrdersAsync(id);
+        return Ok(order);
+    }
 }

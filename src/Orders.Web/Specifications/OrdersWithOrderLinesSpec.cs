@@ -7,6 +7,7 @@ public sealed class OrdersAndOrderLinesSpec : Specification<Order>
 {
     public OrdersAndOrderLinesSpec()
     {
-        Query.Include(order => order.OrderLines);
+        Query.Include(order => order.OrderLines)
+            .Include(order => order.DeliveryAddress);
     }
 }

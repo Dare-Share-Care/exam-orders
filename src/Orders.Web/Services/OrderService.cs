@@ -50,6 +50,31 @@ public class OrderService : IOrderService
         return orderViewModels;
     }
 
+    public async Task<List<OrderViewModel>> GetCustomersCompletedOrdersAsync(long userId)
+    {
+        var orders = await _orderReadRepository.ListAsync(new OrdersByUsersIdWithOrderLinesSpec(userId));
+        //Filter orders by status (completed)
+        var completedOrders = orders.Where(order => order.Status == OrderStatus.Completed).ToList();
+        
+        //Map the orders to the view model
+        var orderViewModels = completedOrders.Select(order => new OrderViewModel
+        {
+            Id = order.Id,
+            UserId = order.UserId,
+            CreatedDate = order.CreatedDate,
+            TotalPrice = order.TotalPrice,
+            OrderLines = order.OrderLines.Select(orderLine => new OrderLineViewModel
+            {
+                MenuItemName = orderLine.MenuItemName!,
+                MenuItemId = orderLine.MenuItemId,
+                Quantity = orderLine.Quantity,
+                Price = orderLine.Price
+            }).ToList()
+        }).ToList();
+        
+        return orderViewModels;
+    }
+
     public async Task<List<OrderToClaimViewModel>> GetInProgressOrdersAsync()
     {
         var orders = await _orderReadRepository.ListAsync(new InProgressOrdersSpec());
