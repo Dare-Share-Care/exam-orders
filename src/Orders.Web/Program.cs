@@ -52,7 +52,8 @@ builder.Services.AddHostedService<UpdatedClaimedOrdersConsumer>();
 builder.Services.AddHostedService<UpdatedCompletedOrdersConsumer>();
 
 //JWT Key
-var key = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!);
+// var key = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!);
+var key = Encoding.UTF8.GetBytes("super_secret_key"); //TODO above doesn't work with docker.
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
