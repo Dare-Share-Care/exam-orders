@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+// Define the service
+service Delivery {
+    rpc SendOrdersForDelivery (DeliveryRequest) returns (DeliveryResponse);
+}
+
+// Define the message types
+message OrderMessage {
+    int32 id = 1;
+    string status = 2;
+    string time_created = 3;
+    AddressMessage address = 4;
+}
+
+message AddressMessage {
+    string street = 1;
+    string city = 2;
+    int64 zip = 3;
+}
+
+message DeliveryRequest 
+{
+    //Empty Request (no parameters needed)
+}
+
+message DeliveryResponse {
+    repeated OrderMessage orders = 1;
+}
