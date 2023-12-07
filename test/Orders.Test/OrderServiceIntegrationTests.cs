@@ -34,10 +34,12 @@ public class OrderServiceIntegrationTests : IDisposable
     {
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
-        var catalogueService = new CatalogueService(new ConfigurationManager());
+        var loggingServiceMock = new Mock<ILoggingService>();
+        var catalogueService = new CatalogueService(new ConfigurationManager(), loggingServiceMock.Object);
         var kafkaProducerMock = new Mock<IKafkaProducer>();
         var orderService =
-            new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object);
+            new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object,
+                loggingServiceMock.Object);
 
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();
@@ -57,10 +59,12 @@ public class OrderServiceIntegrationTests : IDisposable
     {
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
-        var catalogueService = new CatalogueService(new ConfigurationManager());
+        var loggingServiceMock = new Mock<ILoggingService>();
+        var catalogueService = new CatalogueService(new ConfigurationManager(), loggingServiceMock.Object);
         var kafkaProducerMock = new Mock<IKafkaProducer>();
         var orderService =
-            new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object);
+            new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object,
+                loggingServiceMock.Object);
 
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();
@@ -80,10 +84,12 @@ public class OrderServiceIntegrationTests : IDisposable
     {
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
-        var catalogueService = new CatalogueService(new ConfigurationManager());
+        var loggingServiceMock = new Mock<ILoggingService>();
+        var catalogueService = new CatalogueService(new ConfigurationManager(), loggingServiceMock.Object);
         var kafkaProducerMock = new Mock<IKafkaProducer>();
         var orderService =
-            new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object);
+            new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object,
+                loggingServiceMock.Object);
 
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();
@@ -106,7 +112,7 @@ public class OrderServiceIntegrationTests : IDisposable
         var catalogueServiceMock = new Mock<ICatalogueService>();
         var kafkaProducerMock = new Mock<IKafkaProducer>();
         var orderService = new OrderService(orderRepository, orderRepository, catalogueServiceMock.Object,
-            kafkaProducerMock.Object);
+            kafkaProducerMock.Object, new Mock<ILoggingService>().Object);
 
         var dto = new CreateOrderDto
         {
@@ -171,7 +177,7 @@ public class OrderServiceIntegrationTests : IDisposable
             (
                 orderRepositoryMock.Object,
                 orderReadRepositoryMock.Object, catalogueServiceMock.Object,
-                kafkaProducer
+                kafkaProducer, new Mock<ILoggingService>().Object
             );
 
         //Mock CatalogueService (from Restaurant.Grpc microservice)
@@ -204,10 +210,12 @@ public class OrderServiceIntegrationTests : IDisposable
     {
         // Arrange
         var orderRepository = new EfRepository<Order>(_context);
-        var catalogueService = new CatalogueService(new ConfigurationManager());
+        var loggingServiceMock = new Mock<ILoggingService>();
+        var catalogueService = new CatalogueService(new ConfigurationManager(), loggingServiceMock.Object);
         var kafkaProducerMock = new Mock<IKafkaProducer>();
         var orderService =
-            new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object);
+            new OrderService(orderRepository, orderRepository, catalogueService, kafkaProducerMock.Object,
+                loggingServiceMock.Object);
 
         // Seed data
         var testOrders = OrderTestHelper.GetTestOrders();

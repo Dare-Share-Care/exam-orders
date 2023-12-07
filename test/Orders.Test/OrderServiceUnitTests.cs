@@ -18,12 +18,13 @@ public class OrderServiceUnitTests
     private readonly Mock<IRepository<Order>> _mockOrderRepository = new();
     private readonly Mock<IReadRepository<Order>> _mockOrderReadRepository = new();
     private readonly Mock<ICatalogueService> _mockCatalogueService = new();
+    private readonly Mock<ILoggingService> _mockLoggingService = new();
     private readonly Mock<IKafkaProducer> _mockKafkaProducer = new();
 
     public OrderServiceUnitTests()
     {
         _orderService = new OrderService(_mockOrderRepository.Object, _mockOrderReadRepository.Object,
-            _mockCatalogueService.Object, _mockKafkaProducer.Object);
+            _mockCatalogueService.Object, _mockKafkaProducer.Object, _mockLoggingService.Object);
     }
 
     [Fact]

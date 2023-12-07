@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Orders.Infrastructure.Entities;
 using Orders.Core.Exceptions;
 using Orders.Core.Interfaces;
@@ -14,15 +15,17 @@ public class OrderService : IOrderService
     private readonly IRepository<Order> _orderRepository;
     private readonly IReadRepository<Order> _orderReadRepository;
     private readonly ICatalogueService _catalogueService;
+    private readonly ILoggingService _loggingService;
     private readonly IKafkaProducer _kafkaProducer;
 
     public OrderService(IRepository<Order> orderRepository, IReadRepository<Order> orderReadRepository,
-        ICatalogueService catalogueService, IKafkaProducer kafkaProducer)
+        ICatalogueService catalogueService, IKafkaProducer kafkaProducer, ILoggingService loggingService)
     {
         _orderRepository = orderRepository;
         _orderReadRepository = orderReadRepository;
         _catalogueService = catalogueService;
         _kafkaProducer = kafkaProducer;
+        _loggingService = loggingService;
     }
 
     public async Task<List<OrderViewModel>> GetOrdersAsync()
@@ -54,7 +57,7 @@ public class OrderService : IOrderService
         var orders = await _orderReadRepository.ListAsync(new OrdersByUsersIdWithOrderLinesSpec(userId));
         //Filter orders by status (completed)
         var completedOrders = orders.Where(order => order.Status == OrderStatus.Completed).ToList();
-        
+
         //Map the orders to the view model
         var orderViewModels = completedOrders.Select(order => new OrderViewModel
         {
@@ -70,7 +73,7 @@ public class OrderService : IOrderService
                 Price = orderLine.Price
             }).ToList()
         }).ToList();
-        
+
         return orderViewModels;
     }
 
@@ -93,7 +96,7 @@ public class OrderService : IOrderService
 
         return orderViewModels;
     }
-    
+
     public async Task<OrderViewModel> GetOrderAsync(long id)
     {
         var order = await _orderReadRepository.FirstOrDefaultAsync(new OrderAndOrderLinesSpec(id));
@@ -130,6 +133,8 @@ public class OrderService : IOrderService
 
         if (catalogue == null)
         {
+            await _loggingService.LogToFile(LogLevel.Error,
+                "Customer tried to order from a restaurant that doesn't exist or service is down");
             throw new InvalidCatalogueException("Restaurant doesn't exist or service is down");
         }
 
@@ -199,6 +204,8 @@ public class OrderService : IOrderService
             return orderViewModel;
         }
 
+        await _loggingService.LogToFile(LogLevel.Information,
+            "Customer tried to order items that doesn't exist in the catalogue");
         throw new InvalidMenuItemException("One or more items doesn't exist in the chosen catalogue");
     }
 
@@ -212,7 +219,7 @@ public class OrderService : IOrderService
 
             await _orderRepository.UpdateAsync(order);
             await _orderRepository.SaveChangesAsync();
-            
+
             //Map the order to the view model
             var orderViewModel = new OrderViewModel
             {
@@ -232,7 +239,10 @@ public class OrderService : IOrderService
 
             return orderViewModel;
         }
+
         //Throw exception if order is not found
+        await _loggingService.LogToFile(LogLevel.Information,
+            "Customer tried to update order status on an order that doesn't exist");
         throw new OrderNotFoundException(orderId);
     }
 }

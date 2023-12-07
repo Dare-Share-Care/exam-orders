@@ -1,6 +1,7 @@
 using Grpc.Core;
 using Grpc.Net.Client;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Orders.Core.Interfaces;
 using Orders.Core.Models.ViewModels;
 using RestaurantNamespace;
@@ -11,23 +12,25 @@ namespace Orders.Core.Services;
 public class CatalogueService : ICatalogueService
 {
     private readonly IConfiguration _configuration = null!;
-
-    public CatalogueService(IConfiguration configuration)
+    private readonly ILoggingService _loggingService;
+    public CatalogueService(IConfiguration configuration, ILoggingService loggingService)
     {
         _configuration = configuration;
+        _loggingService = loggingService;
     }
 
     // Empty constructor is for unit testing / easier mocking
     public CatalogueService()
     {
     }
+    
 
     public async Task<CatalogueViewModel> GetCatalogueAsync(long restaurantId)
     {
         //TODO Reimplement appSettings configuration
         // Get the gRPC server URL from appsettings.json
         // var grpcServerUrl = _configuration.GetValue<string>("GrpcServer:Url");
-        var grpcServerUrl = "http://localhost:5122";
+        const string grpcServerUrl = "http://localhost:5122";
 
         using var channel = GrpcChannel.ForAddress(grpcServerUrl!);
         var client = new Catalogue.CatalogueClient(channel);
@@ -45,6 +48,7 @@ public class CatalogueService : ICatalogueService
         }
         catch (RpcException ex)
         {
+            await _loggingService.LogToFile(LogLevel.Error, $"gRPC Error: {ex.Status.Detail}", ex);
             throw new Exception($"gRPC Error: {ex.Status.Detail}", ex);
         }
     }
