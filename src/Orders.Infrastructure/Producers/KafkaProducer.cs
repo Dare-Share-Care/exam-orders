@@ -2,19 +2,19 @@ using System.Text.Json;
 using Confluent.Kafka;
 using Orders.Infrastructure.Interfaces.Producers;
 
-namespace Orders.Test.Drivers;
+namespace Orders.Infrastructure.Producers;
 
-public class TestProducer : IKafkaProducer
+public class KafkaProducer : IKafkaProducer
 {
     private readonly IProducer<string, string> _producer;
     private const string BootstrapServers = "localhost:9092";
-
-    public TestProducer()
+    
+    public KafkaProducer()
     {
         var config = new ProducerConfig { BootstrapServers = BootstrapServers };
         _producer = new ProducerBuilder<string, string>(config).Build();
     }
-
+    
     public async Task ProduceAsync<T>(string topic, T value)
     {
         var message = new Message<string, string>
@@ -22,10 +22,10 @@ public class TestProducer : IKafkaProducer
             Key = Guid.NewGuid().ToString(),
             Value = JsonSerializer.Serialize(value)
         };
-        await _producer.ProduceAsync("test-send-email", message);
+        await _producer.ProduceAsync(topic, message);
     }
-
-
+    
+    
     public void Dispose()
     {
         _producer.Dispose();

@@ -4,15 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Orders.Test.Drivers;
 using Orders.Test.Helpers;
-using Orders.Web.Data;
-using Orders.Web.Entities;
-using Orders.Web.Interfaces.DomainServices;
-using Orders.Web.Interfaces.Producers;
-using Orders.Web.Interfaces.Repositories;
-using Orders.Web.Models.Dto;
-using Orders.Web.Models.Enums;
-using Orders.Web.Models.ViewModels;
-using Orders.Web.Services;
+using Orders.Infrastructure.Data;
+using Orders.Infrastructure.Entities;
+using Orders.Infrastructure.Interfaces.Producers;
+using Orders.Infrastructure.Interfaces;
+using Orders.Core.Models.Dto;
+using Orders.Core.Models.ViewModels;
+using Orders.Core.Services;
+using Orders.Core.Interfaces;
+
 
 namespace Orders.Test;
 

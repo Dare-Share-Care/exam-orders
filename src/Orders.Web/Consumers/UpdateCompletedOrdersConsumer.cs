@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Confluent.Kafka;
-using Orders.Web.Interfaces.DomainServices;
-using Orders.Web.Models.Dto;
-using Orders.Web.Models.Enums;
+using Orders.Core.Interfaces;
+using Orders.Core.Models.Dto;
+using Orders.Infrastructure.Entities;
 
 namespace Orders.Web.Consumers
 {

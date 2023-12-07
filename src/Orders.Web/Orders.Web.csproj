@@ -14,10 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\catalogue.proto" GrpcServices="Client"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="Ardalis.Specification" Version="7.0.0"/>
         <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="7.0.0"/>
         <PackageReference Include="Confluent.Kafka" Version="2.3.0" />
@@ -38,5 +34,15 @@
         <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0"/>
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Interfaces\DomainServices\" />
+      <Folder Include="Interfaces\Producers\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Orders.Core\Orders.Core.csproj" />
+      <ProjectReference Include="..\Orders.Infrastructure\Orders.Infrastructure.csproj" />
     </ItemGroup>
 </Project>
