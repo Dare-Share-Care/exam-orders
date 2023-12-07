@@ -1,14 +1,25 @@
 ﻿version: '3.8'
 
 services:
-  mtogo.orders:
-    container_name: mtogo-orders
-    image: mtogo.orders
+  mtogo.orders-web:
+    container_name: mtogo-orders-web
+    image: mtogo.orders.web
     build:
       context: .
       dockerfile: src/Orders.Web/Dockerfile
     ports:
       - "8085:80"
+    networks:
+      - kafka
+        
+  mtogo.orders.grpc:
+    container_name: mtogo-orders-grpc
+    image: mtogo.orders.grpc
+    build:
+      context: .
+      dockerfile: src/Orders.Grpc/Dockerfile
+    ports:
+      - "8086:80"
     networks:
       - kafka
 

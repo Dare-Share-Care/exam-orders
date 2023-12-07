@@ -41,19 +41,19 @@ public class OrderController : ControllerBase
         return Ok(order);
     }
     
-    [HttpPost("create")]
-    [Authorize(Roles="Customer")]
-    public async Task<ActionResult<OrderViewModel>> CreateOrderAsync([FromBody] CreateOrderDto dto)
-    {
-        var order = await _orderService.CreateOrderAsync(dto);
-        return Ok(order);
-    }
-    
     [HttpGet("customer/{id}")]
     [Authorize(Roles="Customer")]
     public async Task<ActionResult<OrderViewModel>> GetCompletedOrdersByUserId(int id)
     {
         var order = await _orderService.GetCustomersCompletedOrdersAsync(id);
+        return Ok(order);
+    }
+    
+    [HttpPost("create")]
+    [Authorize(Roles="Customer")]
+    public async Task<ActionResult<OrderViewModel>> CreateOrderAsync([FromBody] CreateOrderDto dto)
+    {
+        var order = await _orderService.CreateOrderAsync(dto);
         return Ok(order);
     }
 }
