@@ -11,5 +11,5 @@ public interface IOrderService
     Task<List<OrderToClaimViewModel>> GetInProgressOrdersAsync();
     Task<OrderViewModel> GetOrderAsync(long id);
     Task<OrderViewModel> CreateOrderAsync(CreateOrderDto dto);
-    Task UpdateOrderStatusAsync(long orderId, OrderStatus status);
+    Task<OrderViewModel> UpdateOrderStatusAsync(long orderId, OrderStatus status);
 }

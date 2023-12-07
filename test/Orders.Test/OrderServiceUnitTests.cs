@@ -189,4 +189,22 @@ public class OrderServiceUnitTests
         //Act + Assert
         await Assert.ThrowsAsync<InvalidMenuItemException>(() => _orderService.CreateOrderAsync(dto));
     }
+    
+    [Fact]
+    public async Task UpdateOrderStatusAsync_WhenOrderExists_UpdatesOrderStatus()
+    {
+        // Arrange
+        var testOrders = OrderTestHelper.GetTestOrders();
+
+        //Mock repository and specification
+        _mockOrderReadRepository
+            .Setup(x => x.FirstOrDefaultAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
+            .ReturnsAsync(testOrders[0]);
+
+        // Act
+        var result = await _orderService.UpdateOrderStatusAsync(1, OrderStatus.InProgress);
+
+        // Assert
+        Assert.Equal(OrderStatus.InProgress, result.Status); //We expect order status to be InProgress
+    }
 }

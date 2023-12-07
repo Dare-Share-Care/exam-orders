@@ -203,9 +203,9 @@ public class OrderService : IOrderService
         throw new InvalidMenuItemException("One or more items doesn't exist in the chosen catalogue");
     }
 
-    public async Task UpdateOrderStatusAsync(long orderId, OrderStatus status)
+    public async Task<OrderViewModel> UpdateOrderStatusAsync(long orderId, OrderStatus status)
     {
-        var order = await _orderReadRepository.GetByIdAsync(orderId);
+        var order = await _orderReadRepository.FirstOrDefaultAsync(new OrderSpec(orderId));
 
         if (order != null)
         {
@@ -213,7 +213,27 @@ public class OrderService : IOrderService
 
             await _orderRepository.UpdateAsync(order);
             await _orderRepository.SaveChangesAsync();
+            
+            //Map the order to the view model
+            var orderViewModel = new OrderViewModel
+            {
+                Id = order.Id,
+                UserId = order.UserId,
+                CreatedDate = order.CreatedDate,
+                Status = order.Status,
+                TotalPrice = order.TotalPrice,
+                OrderLines = order.OrderLines.Select(orderLine => new OrderLineViewModel
+                {
+                    MenuItemName = orderLine.MenuItemName!,
+                    MenuItemId = orderLine.MenuItemId,
+                    Quantity = orderLine.Quantity,
+                    Price = orderLine.Price
+                }).ToList()
+            };
+
+            return orderViewModel;
         }
-        else throw new OrderNotFoundException(orderId);
+        //Throw exception if order is not found
+        throw new OrderNotFoundException(orderId);
     }
 }
