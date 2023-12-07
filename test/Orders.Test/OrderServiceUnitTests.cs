@@ -207,4 +207,37 @@ public class OrderServiceUnitTests
         // Assert
         Assert.Equal(OrderStatus.InProgress, result.Status); //We expect order status to be InProgress
     }
+    
+    [Fact]
+    public async Task UpdateOrderStatusAsync_WhenOrderDoesNotExist_ThrowsOrderNotFoundException()
+    {
+        // Arrange
+        var testOrders = OrderTestHelper.GetTestOrders();
+
+        //Mock repository and specification
+        _mockOrderReadRepository
+            .Setup(x => x.GetByIdAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
+            .ReturnsAsync(testOrders[0]);
+
+        // Act + Assert
+        await Assert.ThrowsAsync<OrderNotFoundException>(() => _orderService.UpdateOrderStatusAsync(4, OrderStatus.InProgress));
+    }
+    
+    [Fact]
+    public async Task GetCustomersCompletedOrdersAsync_ReturnsCompletedOrders()
+    {
+        // Arrange
+        var testOrders = OrderTestHelper.GetTestOrders();
+
+        //Mock repository and specification
+        _mockOrderReadRepository.Setup(x => x.ListAsync(It.IsAny<ISpecification<Order>>(), new CancellationToken()))
+            .ReturnsAsync(testOrders);
+
+        // Act
+        var result = await _orderService.GetCustomersCompletedOrdersAsync(1);
+
+        // Assert
+        Assert.NotNull(result); //Test if null
+        Assert.Single(result); //We expect 1 order
+    }
 }

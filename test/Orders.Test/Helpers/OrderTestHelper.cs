@@ -25,17 +25,17 @@ internal static class OrderTestHelper
 
         var orders = new List<Order>
         {
-            new Order
+            new()
             {
                 Id = 1,
                 UserId = 1,
                 CreatedDate = DateTime.Now,
                 TotalPrice = 100,
                 OrderLines = orderLines,
-                Status = OrderStatus.New,
+                Status = OrderStatus.Completed,
                 DeliveryAddress = deliveryAddress
             },
-            new Order
+            new()
             {
                 Id = 2,
                 UserId = 2,
@@ -45,7 +45,7 @@ internal static class OrderTestHelper
                 Status = OrderStatus.InProgress,
                 DeliveryAddress = deliveryAddress
             },
-            new Order
+            new()
             {
                 Id = 3,
                 UserId = 3,
