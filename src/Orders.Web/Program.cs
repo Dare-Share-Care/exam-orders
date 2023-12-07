@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Orders.Web.Consumers;
-using Orders.Web.Data;
-using Orders.Web.Interfaces.DomainServices;
-using Orders.Web.Interfaces.Producers;
-using Orders.Web.Interfaces.Repositories;
-using Orders.Web.Producers;
-using Orders.Web.Services;
+using Orders.Core.Interfaces;
+using Orders.Core.Services;
+using Orders.Infrastructure.Data;
+using Orders.Infrastructure.Interfaces.Producers;
+using Orders.Infrastructure.Interfaces;
+using Orders.Infrastructure.Producers;
 
 const string policyName = "AllowOrigin";
 

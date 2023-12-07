@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Orders.Web.Data;
+using Orders.Infrastructure.Data;
+
 namespace Orders.Test.CustomFactories;
 
 public class GetAllOrdersWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class

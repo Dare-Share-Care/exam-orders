@@ -1,6 +1,4 @@
-using Orders.Web.Entities;
-using Orders.Web.Models.Dto;
-using Orders.Web.Models.Enums;
+using Orders.Infrastructure.Entities;
 
 namespace Orders.Test.Helpers;
 
@@ -11,9 +9,9 @@ internal static class OrderTestHelper
         //Mock some orders with order lines
         var orderLines = new List<OrderLine>
         {
-            new OrderLine { Id = 1, OrderId = 1, MenuItemId = 1, Quantity = 1, Price = 100 },
-            new OrderLine { Id = 2, OrderId = 2, MenuItemId = 2, Quantity = 2, Price = 200 },
-            new OrderLine { Id = 3, OrderId = 3, MenuItemId = 3, Quantity = 3, Price = 300 }
+            new() { Id = 1, OrderId = 1, MenuItemId = 1, Quantity = 1, Price = 100 },
+            new() { Id = 2, OrderId = 2, MenuItemId = 2, Quantity = 2, Price = 200 },
+            new() { Id = 3, OrderId = 3, MenuItemId = 3, Quantity = 3, Price = 300 }
         };
 
         var deliveryAddress = new Address

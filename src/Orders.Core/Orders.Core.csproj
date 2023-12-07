@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Protobuf Include="Protos\catalogue.proto" GrpcServices="Client"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="Google.Protobuf" Version="3.25.1"/>
+        <PackageReference Include="Grpc.Core" Version="2.46.6"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.59.0"/>
+        <PackageReference Include="Grpc.Tools" Version="2.60.0-pre1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0"/>
+    </ItemGroup>
+    
+
+    <ItemGroup>
+        <ProjectReference Include="..\Orders.Infrastructure\Orders.Infrastructure.csproj"/>
+    </ItemGroup>
+
+
+</Project>

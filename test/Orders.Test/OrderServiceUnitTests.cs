@@ -1,15 +1,14 @@
 using Ardalis.Specification;
 using Moq;
 using Orders.Test.Helpers;
-using Orders.Web.Entities;
-using Orders.Web.Exceptions;
-using Orders.Web.Interfaces.DomainServices;
-using Orders.Web.Interfaces.Producers;
-using Orders.Web.Interfaces.Repositories;
-using Orders.Web.Models.Dto;
-using Orders.Web.Models.Enums;
-using Orders.Web.Models.ViewModels;
-using Orders.Web.Services;
+using Orders.Infrastructure.Entities;
+using Orders.Infrastructure.Interfaces.Producers;
+using Orders.Infrastructure.Interfaces;
+using Orders.Core.Exceptions;
+using Orders.Core.Interfaces;
+using Orders.Core.Models.Dto;
+using Orders.Core.Models.ViewModels;
+using Orders.Core.Services;
 
 namespace Orders.Test;
 

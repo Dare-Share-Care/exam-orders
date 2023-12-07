@@ -1,8 +1,8 @@
 using System.Net;
 using Newtonsoft.Json;
 using Orders.Test.CustomFactories;
-using Orders.Web.Data;
-using Orders.Web.Entities;
+using Orders.Infrastructure.Data;
+using Orders.Infrastructure.Entities;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Orders.Test.Helpers;

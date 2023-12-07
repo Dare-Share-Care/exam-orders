@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Orders.Web.Interfaces.DomainServices;
-using Orders.Web.Models.Dto;
-using Orders.Web.Models.ViewModels;
+using Orders.Core.Interfaces;
+using Orders.Core.Models.Dto;
+using Orders.Core.Models.ViewModels;
 
 namespace Orders.Web.Controllers;
 
