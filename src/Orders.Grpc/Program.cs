@@ -34,7 +34,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.MapGrpcService<DeliveryService>();
-// app.MapGrpcService<Y>();
+app.MapGrpcService<ReviewService>();
 
 app.MapGet("/delivery",
     () =>

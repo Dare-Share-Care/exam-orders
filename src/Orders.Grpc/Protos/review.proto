@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+// Define the service
+service Review {
+    rpc SendOrdersForReview (ReviewRequest) returns (ReviewResponse);
+}
+
+// Define the message types
+message ReviewOrderMessage {
+    int64 id = 1;
+    int64 user_id = 2;
+    string time_created = 3;
+    string status = 4;
+    float total = 5;
+    repeated ReviewOrderLineMessage order_lines = 6;
+}
+
+message ReviewOrderLineMessage {
+    string menu_item_name = 1;
+    int64 menu_item_id = 2;
+    int64 quantity = 3;
+    float price = 4;
+}
+
+message ReviewRequest 
+{
+    int64 user_id = 1;
+}
+
+message ReviewResponse {
+    repeated ReviewOrderMessage orders = 1;
+}
