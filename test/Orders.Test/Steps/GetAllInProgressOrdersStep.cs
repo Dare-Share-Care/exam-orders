@@ -26,7 +26,10 @@ namespace Orders.Test.Steps
         public void GivenACourierUserIsLoggedIntoTheSystem()
         {
             _client = _factory.CreateClient();
-            // TODO: Implement courier user login logic
+            
+            //Mock JWT token
+            _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + JwtTokenHelper.GetCourierJwtToken());
+            
         }
 
         [Given(@"orders exists in the system with the order status ‘in progress’")]

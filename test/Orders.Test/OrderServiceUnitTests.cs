@@ -116,12 +116,12 @@ public class OrderServiceUnitTests
             },
             Lines = new List<CreateOrderLineDto>
             {
-                new CreateOrderLineDto()
+                new()
                 {
                     MenuItemId = 1,
                     Quantity = 1
                 },
-                new CreateOrderLineDto()
+                new()
                 {
                     MenuItemId = 2,
                     Quantity = 2
@@ -135,8 +135,8 @@ public class OrderServiceUnitTests
                 RestaurantId = 1,
                 Menu = new List<MenuItemViewModel>
                 {
-                    new MenuItemViewModel { Id = 1, Name = "Item 1", Price = 100 },
-                    new MenuItemViewModel { Id = 2, Name = "Item 2", Price = 150 }
+                    new() { Id = 1, Name = "Item 1", Price = 100 },
+                    new() { Id = 2, Name = "Item 2", Price = 150 }
                 }
             });
 
@@ -162,12 +162,12 @@ public class OrderServiceUnitTests
 
             Lines = new List<CreateOrderLineDto>
             {
-                new CreateOrderLineDto()
+                new()
                 {
                     MenuItemId = 1,
                     Quantity = 1
                 },
-                new CreateOrderLineDto()
+                new()
                 {
                     MenuItemId = 3, //Invalid menu item, doesn't exist in the catalogue
                     Quantity = 2
@@ -181,8 +181,8 @@ public class OrderServiceUnitTests
                 RestaurantId = 1,
                 Menu = new List<MenuItemViewModel>
                 {
-                    new MenuItemViewModel { Id = 1, Name = "Item 1", Price = 100 },
-                    new MenuItemViewModel { Id = 2, Name = "Item 2", Price = 150 }
+                    new() { Id = 1, Name = "Item 1", Price = 100 },
+                    new() { Id = 2, Name = "Item 2", Price = 150 }
                 }
             });
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Web.Interfaces.DomainServices;
 using Orders.Web.Models.Dto;
@@ -17,6 +18,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet("all")]
+    [Authorize(Roles="Admin")]
     public async Task<ActionResult<List<OrderViewModel>>> GetOrdersAsync()
     {
         var orders = await _orderService.GetOrdersAsync();
@@ -24,6 +26,7 @@ public class OrderController : ControllerBase
     }
 
     [HttpGet("ready-for-delivery")]
+    [Authorize(Roles="Courier")]
     public async Task<ActionResult<List<OrderViewModel>>> GetOrdersReadyForDeliveryAsync()
     {
         var orders = await _orderService.GetInProgressOrdersAsync();
@@ -31,6 +34,7 @@ public class OrderController : ControllerBase
     }
     
     [HttpGet("{id}")]
+    [Authorize(Roles="Admin")]
     public async Task<ActionResult<OrderViewModel>> GetOrderAsync(int id)
     {
         var order = await _orderService.GetOrderAsync(id);
@@ -38,6 +42,7 @@ public class OrderController : ControllerBase
     }
     
     [HttpPost("create")]
+    [Authorize(Roles="Customer")]
     public async Task<ActionResult<OrderViewModel>> CreateOrderAsync([FromBody] CreateOrderDto dto)
     {
         var order = await _orderService.CreateOrderAsync(dto);
@@ -45,6 +50,7 @@ public class OrderController : ControllerBase
     }
     
     [HttpGet("customer/{id}")]
+    [Authorize(Roles="Customer")]
     public async Task<ActionResult<OrderViewModel>> GetCompletedOrdersByUserId(int id)
     {
         var order = await _orderService.GetCustomersCompletedOrdersAsync(id);

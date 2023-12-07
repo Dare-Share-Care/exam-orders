@@ -69,6 +69,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireCustomerRole", policy => policy.RequireRole("Customer"));
+    options.AddPolicy("RequireCourierRole", policy => policy.RequireRole("Courier"));
+    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
     // Add more policies for other roles as needed
 });
 

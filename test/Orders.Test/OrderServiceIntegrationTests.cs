@@ -245,12 +245,12 @@ public class OrderServiceIntegrationTests : IDisposable
             },
             Lines = new List<CreateOrderLineDto>
             {
-                new CreateOrderLineDto()
+                new()
                 {
                     MenuItemId = 1,
                     Quantity = 1
                 },
-                new CreateOrderLineDto()
+                new()
                 {
                     MenuItemId = 2,
                     Quantity = 2

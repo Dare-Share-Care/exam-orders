@@ -26,7 +26,9 @@ namespace Orders.Test.Steps
         public void GivenAnAuthenticatedUserIsLoggedIntoTheSystem()
         {
             _client = _factory.CreateClient();
-            //TODO: Add authentication logic here
+
+            //Mock JWT token
+            _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + JwtTokenHelper.GetAdminJwtToken());
         }
 
         [Given(@"orders exists in the system")]
@@ -34,7 +36,7 @@ namespace Orders.Test.Steps
         {
             using var scope = _factory.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<OrderContext>();
-            
+
             // Populate the database with some orders
             var orders = OrderTestHelper.GetTestOrders();
             await context.Orders.AddRangeAsync(orders);

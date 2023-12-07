@@ -21,7 +21,6 @@ public static class TestTopicManager
         using var adminClient = new AdminClientBuilder(config).Build();
 
         await adminClient.DeleteTopicsAsync(new[] { topic });
-        // No explicit error handling or exception catching in this version.
     }
     
     //Get topic messages
@@ -31,7 +30,7 @@ public static class TestTopicManager
         {
             BootstrapServers = BootstrapServers,
             GroupId = Guid.NewGuid().ToString(),
-            AutoOffsetReset = AutoOffsetReset.Earliest // Change this based on your requirements
+            AutoOffsetReset = AutoOffsetReset.Earliest
         };
 
         using var consumer = new ConsumerBuilder<Ignore, string>(config).Build();
@@ -60,7 +59,7 @@ public static class TestTopicManager
         }
         catch (OperationCanceledException)
         {
-            // This will be thrown when the consumer times out.
+            consumer.Close();
         }
         finally
         {
