@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Orders.Core.Exceptions;
 using Orders.Core.Interfaces;
+using Orders.Core.Models.Dto;
 using Orders.Core.Models.ViewModels;
 using Orders.Infrastructure.Entities;
 using Orders.Infrastructure.Interfaces;
@@ -18,9 +19,9 @@ public class PaymentService : IPaymentService
         _loggingService = loggingService;
     }
 
-    public async Task<RestaurantFeeViewModel> PayRestaurantFeeAsync(long feeId)
+    public async Task<RestaurantFeeViewModel> PayRestaurantFeeAsync(PayDto dto)
     {
-        var restaurantFee = await _restaurantFeeRepository.GetByIdAsync(feeId);
+        var restaurantFee = await _restaurantFeeRepository.GetByIdAsync(dto.FeeId);
 
         //Pay the fee
         if (restaurantFee != null)
@@ -35,7 +36,7 @@ public class PaymentService : IPaymentService
             };
         }
         
-        await _loggingService.LogToFile(LogLevel.Error, $"Fee with id {feeId} not found");
-        throw new FeeNotFoundException($"Fee with id {feeId} not found");
+        await _loggingService.LogToFile(LogLevel.Error, $"Fee with id {dto.FeeId} not found");
+        throw new FeeNotFoundException($"Fee with id {dto.FeeId} not found");
     }
 }

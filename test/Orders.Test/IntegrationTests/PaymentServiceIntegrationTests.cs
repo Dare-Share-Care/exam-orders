@@ -5,6 +5,7 @@ using Orders.Core.Services;
 using Orders.Infrastructure.Data;
 using Orders.Infrastructure.Entities;
 using Moq;
+using Orders.Core.Models.Dto;
 
 namespace Orders.Test.IntegrationTests;
 
@@ -40,7 +41,7 @@ public class PaymentServiceIntegrationTests
         await _context.SaveChangesAsync();
         
         // Act
-        var result = await paymentService.PayRestaurantFeeAsync(1);
+        var result = await paymentService.PayRestaurantFeeAsync(new PayDto { FeeId = 1 });
 
         // Assert
         Assert.NotNull(result); //Test if null

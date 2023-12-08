@@ -1,5 +1,6 @@
 using Moq;
 using Orders.Core.Interfaces;
+using Orders.Core.Models.Dto;
 using Orders.Core.Services;
 using Orders.Infrastructure.Entities;
 using Orders.Infrastructure.Interfaces;
@@ -33,7 +34,7 @@ public class PaymentServiceUnitTests
             .ReturnsAsync(testRestaurantFee);
 
         // Act
-        var result = await _paymentService.PayRestaurantFeeAsync(1);
+        var result = await _paymentService.PayRestaurantFeeAsync(new PayDto { FeeId = 1 });
 
         // Assert
         Assert.NotNull(result); //Test if null

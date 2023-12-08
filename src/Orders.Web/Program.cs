@@ -40,6 +40,7 @@ builder.Services.AddDbContext<OrderContext>(options =>
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICatalogueService, CatalogueService>();
 builder.Services.AddScoped<ILoggingService, LoggingService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 //Build Kafka producers
 builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();

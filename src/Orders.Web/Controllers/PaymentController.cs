@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Orders.Core.Interfaces;
+using Orders.Core.Models.Dto;
 
 namespace Orders.Web.Controllers;
 
@@ -14,10 +15,10 @@ public class PaymentController : ControllerBase
         _paymentService = paymentService;
     }
     
-    [HttpPost("restaurant-fee/{id}")]
-    public async Task<ActionResult> PayRestaurantFeeAsync(long id)
+    [HttpPost("restaurant-fee")]
+    public async Task<ActionResult> PayRestaurantFeeAsync(PayDto dto)
     {
-        await _paymentService.PayRestaurantFeeAsync(id);
-        return Ok();
+        var response = await _paymentService.PayRestaurantFeeAsync(dto);
+        return Ok(response);
     }
 }
