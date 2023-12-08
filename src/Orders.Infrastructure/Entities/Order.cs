@@ -8,4 +8,5 @@ public class Order : BaseEntity
     public OrderStatus Status { get; set; }
     public decimal TotalPrice { get; set; }
     public List<OrderLine> OrderLines { get; set; } = new();
+    public RestaurantFee RestaurantFee { get; set; } = null!;
 }

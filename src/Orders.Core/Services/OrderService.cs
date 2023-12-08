@@ -170,7 +170,20 @@ public class OrderService : IOrderService
             //Save order
             await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
+            
+            //Calculate restaurant fee
+            var fee = new RestaurantFee
+            {
+                OrderId = order.Id,
+                RestaurantId = dto.RestaurantId,
+                Amount = CalculateRestaurantFee(order.TotalPrice),
+                PaymentStatus = 0 // 0 = Not paid
+            };
 
+            order.RestaurantFee = fee;
+            await _orderRepository.UpdateAsync(order);
+            await _orderRepository.SaveChangesAsync();
+            
             //Email details
             //TODO: Add restaurant details containing menu items to email
             var emailDetails = new EmailDto()
@@ -209,6 +222,20 @@ public class OrderService : IOrderService
         throw new InvalidMenuItemException("One or more items doesn't exist in the chosen catalogue");
     }
 
+    private decimal CalculateRestaurantFee(decimal totalPrice)
+    {
+        // Switch case based on the total order price
+        var feePercentage = totalPrice switch
+        {
+            < 101 => 0.06m,
+            <= 1000 => 0.03m,
+            _ => 0.03m
+        };
+
+        // Calculate the restaurant fee based on the total order price
+        var restaurantFee = totalPrice * feePercentage;
+        return restaurantFee;
+    }
     public async Task<OrderViewModel> UpdateOrderStatusAsync(long orderId, OrderStatus status)
     {
         var order = await _orderReadRepository.FirstOrDefaultAsync(new OrderSpec(orderId));

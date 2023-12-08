@@ -1,6 +1,6 @@
 namespace Orders.Infrastructure.Entities;
 
-public enum OrderStatus //VaueObject
+public enum OrderStatus //ValueObject
 {
     New = 0,
     InProgress = 1,
