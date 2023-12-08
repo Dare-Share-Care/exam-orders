@@ -14,7 +14,7 @@ using Orders.Core.Services;
 using Orders.Core.Interfaces;
 
 
-namespace Orders.Test;
+namespace Orders.Test.IntegrationTests;
 
 public class OrderServiceIntegrationTests : IDisposable
 {

@@ -10,7 +10,7 @@ using Orders.Core.Models.Dto;
 using Orders.Core.Models.ViewModels;
 using Orders.Core.Services;
 
-namespace Orders.Test;
+namespace Orders.Test.UnitTests;
 
 public class OrderServiceUnitTests
 {

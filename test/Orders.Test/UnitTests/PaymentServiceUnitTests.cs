@@ -4,7 +4,7 @@ using Orders.Core.Services;
 using Orders.Infrastructure.Entities;
 using Orders.Infrastructure.Interfaces;
 
-namespace Orders.Test;
+namespace Orders.Test.UnitTests;
 
 public class PaymentServiceUnitTests
 {
