@@ -50,7 +50,7 @@ public class OrderController : ControllerBase
     }
     
     [HttpPost("create")]
-    // [Authorize(Roles="Customer")]
+    [Authorize(Roles="Customer")]
     public async Task<ActionResult<OrderViewModel>> CreateOrderAsync([FromBody] CreateOrderDto dto)
     {
         var order = await _orderService.CreateOrderAsync(dto);
