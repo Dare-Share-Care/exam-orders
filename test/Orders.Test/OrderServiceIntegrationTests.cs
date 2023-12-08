@@ -126,12 +126,12 @@ public class OrderServiceIntegrationTests : IDisposable
             },
             Lines = new List<CreateOrderLineDto>
             {
-                new CreateOrderLineDto()
+                new()
                 {
                     MenuItemId = 1,
                     Quantity = 1
                 },
-                new CreateOrderLineDto()
+                new()
                 {
                     MenuItemId = 2,
                     Quantity = 2
@@ -146,8 +146,8 @@ public class OrderServiceIntegrationTests : IDisposable
                 RestaurantId = 1,
                 Menu = new List<MenuItemViewModel>
                 {
-                    new MenuItemViewModel { Id = 1, Name = "Item 1", Price = 100 },
-                    new MenuItemViewModel { Id = 2, Name = "Item 2", Price = 150 }
+                    new() { Id = 1, Name = "Item 1", Price = 100 },
+                    new() { Id = 2, Name = "Item 2", Price = 150 }
                 }
             });
 
@@ -187,8 +187,8 @@ public class OrderServiceIntegrationTests : IDisposable
                 RestaurantId = 1,
                 Menu = new List<MenuItemViewModel>
                 {
-                    new MenuItemViewModel { Id = 1, Name = "Item 1", Price = 100 },
-                    new MenuItemViewModel { Id = 2, Name = "Item 2", Price = 150 }
+                    new() { Id = 1, Name = "Item 1", Price = 100 },
+                    new() { Id = 2, Name = "Item 2", Price = 150 }
                 }
             });
         //Setup kafka environment
@@ -196,7 +196,7 @@ public class OrderServiceIntegrationTests : IDisposable
 
 
         // Act
-        await orderService.CreateOrderAsync(GetTestCreateOrderDto());
+        await orderService.CreateOrderAsync(OrderTestHelper.GetTestCreateOrderDto());
 
         //Get kafka topic message count
         var topicMessages = await TestTopicManager.GetTopicMessages("test-send-email");
@@ -237,33 +237,5 @@ public class OrderServiceIntegrationTests : IDisposable
 
         //Delete kafka topic after test
         await TestTopicManager.DeleteTopic("test-send-email");
-    }
-
-    private CreateOrderDto GetTestCreateOrderDto()
-    {
-        return new CreateOrderDto
-        {
-            RestaurantId = 1,
-            UserId = 1,
-            DeliveryAddress = new DeliveryAddressDto()
-            {
-                Street = "Test street",
-                City = "Test city",
-                ZipCode = 1234
-            },
-            Lines = new List<CreateOrderLineDto>
-            {
-                new()
-                {
-                    MenuItemId = 1,
-                    Quantity = 1
-                },
-                new()
-                {
-                    MenuItemId = 2,
-                    Quantity = 2
-                }
-            }
-        };
     }
 }

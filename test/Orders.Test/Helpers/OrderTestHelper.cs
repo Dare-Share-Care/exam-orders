@@ -1,3 +1,4 @@
+using Orders.Core.Models.Dto;
 using Orders.Infrastructure.Entities;
 
 namespace Orders.Test.Helpers;
@@ -55,5 +56,34 @@ internal static class OrderTestHelper
             }
         };
         return orders;
+    }
+
+    internal static CreateOrderDto GetTestCreateOrderDto()
+    {
+        return new CreateOrderDto
+        {
+            RestaurantId = 1,
+            UserId = 1,
+            UserEmail = "user@example.com",
+            DeliveryAddress = new DeliveryAddressDto()
+            {
+                Street = "Test street",
+                City = "Test city",
+                ZipCode = 1234
+            },
+            Lines = new List<CreateOrderLineDto>
+            {
+                new()
+                {
+                    MenuItemId = 1,
+                    Quantity = 1
+                },
+                new()
+                {
+                    MenuItemId = 2,
+                    Quantity = 2
+                }
+            }
+        };
     }
 }

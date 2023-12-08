@@ -18,6 +18,7 @@ builder.Services.AddDbContext<OrderContext>(options =>
 //Build services
 builder.Services.AddScoped<ICatalogueService, CatalogueService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ILoggingService, LoggingService>();
 
 //Build repositories
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));

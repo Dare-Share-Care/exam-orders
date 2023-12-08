@@ -19,7 +19,7 @@ public class LoggingService : ILoggingService
                 _ => "unknown.log"
             };
 
-            var logFilePath = Path.Combine("logs", logFileName);
+            var logFilePath = Path.Combine("Logs", logFileName);
 
             // Ensure the directory exists before logging
             var logDirectory = Path.GetDirectoryName(logFilePath);
@@ -29,7 +29,7 @@ public class LoggingService : ILoggingService
             }
 
             // Create a log entry with various information
-            string logEntry = $"{DateTime.Now} [{logLevel}] - {logMessage}";
+            var logEntry = $"{DateTime.Now} [{logLevel}] - {logMessage}";
 
             // Include exception information if available
             if (exception != null)
