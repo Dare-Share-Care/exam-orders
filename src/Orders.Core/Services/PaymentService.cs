@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Orders.Core.Exceptions;
 using Orders.Core.Interfaces;
 using Orders.Core.Models.ViewModels;
 using Orders.Infrastructure.Entities;
@@ -8,14 +10,32 @@ namespace Orders.Core.Services;
 public class PaymentService : IPaymentService
 {
     private readonly IRepository<RestaurantFee> _restaurantFeeRepository;
+    private readonly ILoggingService _loggingService;
 
-    public PaymentService(IRepository<RestaurantFee> restaurantFeeRepository)
+    public PaymentService(IRepository<RestaurantFee> restaurantFeeRepository, ILoggingService loggingService)
     {
         _restaurantFeeRepository = restaurantFeeRepository;
+        _loggingService = loggingService;
     }
 
-    public Task<RestaurantFeeViewModel> PayRestaurantFeeAsync(long feeId)
+    public async Task<RestaurantFeeViewModel> PayRestaurantFeeAsync(long feeId)
     {
-        throw new NotImplementedException();
+        var restaurantFee = await _restaurantFeeRepository.GetByIdAsync(feeId);
+
+        //Pay the fee
+        if (restaurantFee != null)
+        {
+            restaurantFee.PaymentStatus = PaymentStatus.Paid;
+            await _restaurantFeeRepository.UpdateAsync(restaurantFee);
+            
+            return new RestaurantFeeViewModel
+            {
+                AmountPaid = restaurantFee.Amount,
+                PaymentStatus = restaurantFee.PaymentStatus
+            };
+        }
+        
+        await _loggingService.LogToFile(LogLevel.Error, $"Fee with id {feeId} not found");
+        throw new FeeNotFoundException($"Fee with id {feeId} not found");
     }
 }

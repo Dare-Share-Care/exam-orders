@@ -10,10 +10,11 @@ public class PaymentServiceUnitTests
 {
     private readonly IPaymentService _paymentService;
     private readonly Mock<IRepository<RestaurantFee>> _mockRestaurantFeeRepository = new();
+    private readonly Mock<ILoggingService> _mockLoggingService = new();
 
     public PaymentServiceUnitTests()
     {
-        _paymentService = new PaymentService(_mockRestaurantFeeRepository.Object);
+        _paymentService = new PaymentService(_mockRestaurantFeeRepository.Object, _mockLoggingService.Object);
     }
     
     [Fact]
