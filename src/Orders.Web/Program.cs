@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder
+                .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
