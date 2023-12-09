@@ -1,11 +1,11 @@
-using Moq;
 using Orders.Core.Interfaces;
 using Orders.Core.Models.Dto;
 using Orders.Core.Services;
 using Orders.Infrastructure.Entities;
 using Orders.Infrastructure.Interfaces;
+using Moq;
 
-namespace Orders.Test.UnitTests;
+namespace Orders.Test.Tests.UnitTests;
 
 public class PaymentServiceUnitTests
 {

@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Moq;
 using Orders.Test.Drivers;
 using Orders.Test.Helpers;
 using Orders.Infrastructure.Data;
@@ -12,9 +11,9 @@ using Orders.Core.Models.Dto;
 using Orders.Core.Models.ViewModels;
 using Orders.Core.Services;
 using Orders.Core.Interfaces;
+using Moq;
 
-
-namespace Orders.Test.IntegrationTests;
+namespace Orders.Test.Tests.IntegrationTests;
 
 public class OrderServiceIntegrationTests : IDisposable
 {

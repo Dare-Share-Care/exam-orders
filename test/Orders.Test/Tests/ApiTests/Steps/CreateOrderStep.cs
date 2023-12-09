@@ -10,7 +10,7 @@ using Orders.Test.CustomFactories;
 using Orders.Test.Helpers;
 using TechTalk.SpecFlow;
 
-namespace Orders.Test.Steps;
+namespace Orders.Test.Tests.ApiTests.Steps;
 
 [Binding]
 public class CreateOrderStep

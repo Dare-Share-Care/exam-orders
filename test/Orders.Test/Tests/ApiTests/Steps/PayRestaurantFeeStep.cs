@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using Orders.Core.Models.Dto;
 using TechTalk.SpecFlow;
 
-namespace Orders.Test.Steps;
+namespace Orders.Test.Tests.ApiTests.Steps;
 
 [Binding]
 public class PayRestaurantFeeStep
@@ -57,7 +57,7 @@ public class PayRestaurantFeeStep
     [When(@"the restaurant owner provides the necessary payment information")]
     public void WhenTheRestaurantOwnerProvidesTheNecessaryPaymentInformation()
     {
-        _dto = new PayDto{FeeId = 1}; //The id of the fee we created in the previous step
+        _dto = new PayDto { FeeId = 1 }; //The id of the fee we created in the previous step
     }
 
 
@@ -66,7 +66,7 @@ public class PayRestaurantFeeStep
     {
         var dtoJson = JsonConvert.SerializeObject(_dto);
         var content = new StringContent(dtoJson, Encoding.UTF8, "application/json");
-        
+
         _response = await _client!.PostAsync($"api/Payment/restaurant-fee", content);
     }
 
@@ -80,6 +80,5 @@ public class PayRestaurantFeeStep
         var context = scope.ServiceProvider.GetRequiredService<OrderContext>();
         var fee = await context.RestaurantFees.FirstOrDefaultAsync();
         fee.PaymentStatus.Should().Be(PaymentStatus.Paid);
-        
     }
 }

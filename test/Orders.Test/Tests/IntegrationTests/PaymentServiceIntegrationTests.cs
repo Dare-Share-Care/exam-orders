@@ -4,10 +4,10 @@ using Orders.Core.Interfaces;
 using Orders.Core.Services;
 using Orders.Infrastructure.Data;
 using Orders.Infrastructure.Entities;
-using Moq;
 using Orders.Core.Models.Dto;
+using Moq;
 
-namespace Orders.Test.IntegrationTests;
+namespace Orders.Test.Tests.IntegrationTests;
 
 public class PaymentServiceIntegrationTests
 {

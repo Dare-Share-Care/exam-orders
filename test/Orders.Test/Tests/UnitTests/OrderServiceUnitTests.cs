@@ -1,5 +1,4 @@
 using Ardalis.Specification;
-using Moq;
 using Orders.Test.Helpers;
 using Orders.Infrastructure.Entities;
 using Orders.Infrastructure.Interfaces.Producers;
@@ -9,8 +8,9 @@ using Orders.Core.Interfaces;
 using Orders.Core.Models.Dto;
 using Orders.Core.Models.ViewModels;
 using Orders.Core.Services;
+using Moq;
 
-namespace Orders.Test.UnitTests;
+namespace Orders.Test.Tests.UnitTests;
 
 public class OrderServiceUnitTests
 {
