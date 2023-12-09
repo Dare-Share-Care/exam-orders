@@ -32,12 +32,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\Orders.Web\Orders.Web.csproj" />
-
-
-
-
-
     </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="ApiTests\" />
+    </ItemGroup>
+
 
 
 
