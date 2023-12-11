@@ -135,7 +135,7 @@ public class OrderServiceUnitTests
     public async Task CreateOrderAsync_WhenInvalidMenuItems_ThrowsInvalidMenuItemException()
     {
         // Arrange
-        var dto = OrderTestHelper.GetTestCreateOrderDtoInvalidMenuItems();
+        var dto = OrderTestHelper.GetTestCreateOrderDtoInvalidMenuItems(); //Has menu items that do not exist in menu
 
         _mockCatalogueService.Setup(c =>
                 c.GetCatalogueAsync(It.IsAny<long>()))

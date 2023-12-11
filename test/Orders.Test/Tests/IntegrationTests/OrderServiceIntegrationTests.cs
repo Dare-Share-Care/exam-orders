@@ -7,7 +7,6 @@ using Orders.Infrastructure.Data;
 using Orders.Infrastructure.Entities;
 using Orders.Infrastructure.Interfaces.Producers;
 using Orders.Infrastructure.Interfaces;
-using Orders.Core.Models.Dto;
 using Orders.Core.Models.ViewModels;
 using Orders.Core.Services;
 using Orders.Core.Interfaces;
@@ -169,7 +168,6 @@ public class OrderServiceIntegrationTests : IDisposable
             });
         //Setup kafka environment
         await TestTopicManager.CreateTopic("test-send-email");
-
 
         // Act
         await orderService.CreateOrderAsync(OrderTestHelper.GetTestCreateOrderDto());

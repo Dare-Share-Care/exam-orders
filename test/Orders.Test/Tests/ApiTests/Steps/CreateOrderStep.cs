@@ -47,8 +47,7 @@ public class CreateOrderStep
         var dtoJson = JsonConvert.SerializeObject(_dto);
         var content = new StringContent(dtoJson, Encoding.UTF8, "application/json");
         
-        _response = await _client.PostAsync("api/order/create", content);
-        var fisk = _response;
+        _response = await _client!.PostAsync("api/order/create", content);
     }
 
     [Then(@"the order is created in the system")]
