@@ -18,7 +18,7 @@ public class CreateOrderStep
     private readonly CreateOrderWebApplicationFactory<Program> _factory;
     private HttpClient? _client;
     private HttpResponseMessage? _response;
-    private CreateOrderDto _dto;
+    private CreateOrderDto _dto = null!;
 
     public CreateOrderStep(CreateOrderWebApplicationFactory<Program> factory)
     {
@@ -30,7 +30,7 @@ public class CreateOrderStep
     {
         _client = _factory.CreateClient();
         
-        //Mock JWT token
+        //Mock JWT token for a customer
         _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + JwtTokenHelper.GetCustomerJwtToken());
     }
 

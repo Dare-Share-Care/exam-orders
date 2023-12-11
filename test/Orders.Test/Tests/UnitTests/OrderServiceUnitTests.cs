@@ -104,32 +104,10 @@ public class OrderServiceUnitTests
     public async Task CreateOrderAsync_ReturnsOrder()
     {
         // Arrange
-        var dto = new CreateOrderDto
-        {
-            RestaurantId = 1,
-            UserId = 1,
-            DeliveryAddress = new DeliveryAddressDto()
-            {
-                Street = "Test street",
-                City = "Test city",
-                ZipCode = 1234
-            },
-            Lines = new List<CreateOrderLineDto>
-            {
-                new()
-                {
-                    MenuItemId = 1,
-                    Quantity = 1
-                },
-                new()
-                {
-                    MenuItemId = 2,
-                    Quantity = 2
-                }
-            }
-        };
+        var dto = OrderTestHelper.GetTestCreateOrderDto();
 
-        _mockCatalogueService.Setup(c => c.GetCatalogueAsync(It.IsAny<long>()))
+        _mockCatalogueService.Setup(c =>
+                c.GetCatalogueAsync(It.IsAny<long>()))
             .ReturnsAsync(new CatalogueViewModel
             {
                 RestaurantId = 1,
@@ -140,42 +118,22 @@ public class OrderServiceUnitTests
                 }
             });
 
-        // _mockKafkaProducer.Setup(k => k.ProduceAsync(It.IsAny<string>(), It.IsAny<EmailDto>()))
-        //     .Returns(Task.CompletedTask);
-
         // Act
         var result = await _orderService.CreateOrderAsync(dto);
 
         // Assert
         Assert.NotNull(result); //Test if null
-        Assert.Equal(400, result.TotalPrice); //We expect a totl price of 400 (100 + 150 * 2)
+        Assert.Equal(400, result.TotalPrice); //We expect a total price of 400 (100 + 150 * 2)
     }
 
     [Fact]
     public async Task CreateOrderAsync_WhenInvalidMenuItems_ThrowsInvalidMenuItemException()
     {
         // Arrange
-        var dto = new CreateOrderDto
-        {
-            RestaurantId = 1,
-            UserId = 1,
+        var dto = OrderTestHelper.GetTestCreateOrderDto();
 
-            Lines = new List<CreateOrderLineDto>
-            {
-                new()
-                {
-                    MenuItemId = 1,
-                    Quantity = 1
-                },
-                new()
-                {
-                    MenuItemId = 3, //Invalid menu item, doesn't exist in the catalogue
-                    Quantity = 2
-                }
-            }
-        };
-
-        _mockCatalogueService.Setup(c => c.GetCatalogueAsync(It.IsAny<long>()))
+        _mockCatalogueService.Setup(c =>
+                c.GetCatalogueAsync(It.IsAny<long>()))
             .ReturnsAsync(new CatalogueViewModel
             {
                 RestaurantId = 1,
@@ -189,7 +147,7 @@ public class OrderServiceUnitTests
         //Act + Assert
         await Assert.ThrowsAsync<InvalidMenuItemException>(() => _orderService.CreateOrderAsync(dto));
     }
-    
+
     [Fact]
     public async Task UpdateOrderStatusAsync_WhenOrderExists_UpdatesOrderStatus()
     {
@@ -207,7 +165,7 @@ public class OrderServiceUnitTests
         // Assert
         Assert.Equal(OrderStatus.InProgress, result.Status); //We expect order status to be InProgress
     }
-    
+
     [Fact]
     public async Task UpdateOrderStatusAsync_WhenOrderDoesNotExist_ThrowsOrderNotFoundException()
     {
@@ -220,9 +178,10 @@ public class OrderServiceUnitTests
             .ReturnsAsync(testOrders[0]);
 
         // Act + Assert
-        await Assert.ThrowsAsync<OrderNotFoundException>(() => _orderService.UpdateOrderStatusAsync(4, OrderStatus.InProgress));
+        await Assert.ThrowsAsync<OrderNotFoundException>(() =>
+            _orderService.UpdateOrderStatusAsync(4, OrderStatus.InProgress));
     }
-    
+
     [Fact]
     public async Task GetCustomersCompletedOrdersAsync_ReturnsCompletedOrders()
     {
