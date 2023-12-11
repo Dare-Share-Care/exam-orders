@@ -5,7 +5,6 @@ using Orders.Infrastructure.Interfaces.Producers;
 using Orders.Infrastructure.Interfaces;
 using Orders.Core.Exceptions;
 using Orders.Core.Interfaces;
-using Orders.Core.Models.Dto;
 using Orders.Core.Models.ViewModels;
 using Orders.Core.Services;
 using Moq;
@@ -23,8 +22,14 @@ public class OrderServiceUnitTests
 
     public OrderServiceUnitTests()
     {
-        _orderService = new OrderService(_mockOrderRepository.Object, _mockOrderReadRepository.Object,
-            _mockCatalogueService.Object, _mockKafkaProducer.Object, _mockLoggingService.Object);
+        _orderService = new OrderService
+        (
+            _mockOrderRepository.Object,
+            _mockOrderReadRepository.Object,
+            _mockCatalogueService.Object,
+            _mockKafkaProducer.Object,
+            _mockLoggingService.Object
+        );
     }
 
     [Fact]
@@ -130,7 +135,7 @@ public class OrderServiceUnitTests
     public async Task CreateOrderAsync_WhenInvalidMenuItems_ThrowsInvalidMenuItemException()
     {
         // Arrange
-        var dto = OrderTestHelper.GetTestCreateOrderDto();
+        var dto = OrderTestHelper.GetTestCreateOrderDtoInvalidMenuItems();
 
         _mockCatalogueService.Setup(c =>
                 c.GetCatalogueAsync(It.IsAny<long>()))

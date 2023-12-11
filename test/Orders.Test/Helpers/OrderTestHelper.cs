@@ -86,4 +86,33 @@ internal static class OrderTestHelper
             }
         };
     }
+    
+    internal static CreateOrderDto GetTestCreateOrderDtoInvalidMenuItems()
+    {
+        return new CreateOrderDto
+        {
+            RestaurantId = 1,
+            UserId = 1,
+            UserEmail = "user@example.com",
+            DeliveryAddress = new DeliveryAddressDto()
+            {
+                Street = "Test street",
+                City = "Test city",
+                ZipCode = 1234
+            },
+            Lines = new List<CreateOrderLineDto>
+            {
+                new()
+                {
+                    MenuItemId = 99, //Invalid menu item
+                    Quantity = 1
+                },
+                new()
+                {
+                    MenuItemId = 48, //Invalid menu item
+                    Quantity = 2
+                }
+            }
+        };
+    }
 }

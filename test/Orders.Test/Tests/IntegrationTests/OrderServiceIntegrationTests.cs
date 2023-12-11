@@ -113,30 +113,7 @@ public class OrderServiceIntegrationTests : IDisposable
         var orderService = new OrderService(orderRepository, orderRepository, catalogueServiceMock.Object,
             kafkaProducerMock.Object, new Mock<ILoggingService>().Object);
 
-        var dto = new CreateOrderDto
-        {
-            RestaurantId = 1,
-            UserId = 1,
-            DeliveryAddress = new DeliveryAddressDto()
-            {
-                Street = "Test street",
-                City = "Test city",
-                ZipCode = 1234
-            },
-            Lines = new List<CreateOrderLineDto>
-            {
-                new()
-                {
-                    MenuItemId = 1,
-                    Quantity = 1
-                },
-                new()
-                {
-                    MenuItemId = 2,
-                    Quantity = 2
-                }
-            }
-        };
+        var dto = OrderTestHelper.GetTestCreateOrderDto();
 
         //Mock CatalogueService (from Restaurant.Grpc microservice) 
         catalogueServiceMock.Setup(c => c.GetCatalogueAsync(It.IsAny<long>()))
