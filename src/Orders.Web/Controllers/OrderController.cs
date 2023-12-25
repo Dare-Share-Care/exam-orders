@@ -24,28 +24,12 @@ public class OrderController : ControllerBase
         var orders = await _orderService.GetOrdersAsync();
         return Ok(orders);
     }
-
-    [HttpGet("ready-for-delivery")]
-    [Authorize(Roles="Courier")]
-    public async Task<ActionResult<List<OrderViewModel>>> GetOrdersReadyForDeliveryAsync()
-    {
-        var orders = await _orderService.GetInProgressOrdersAsync();
-        return Ok(orders);
-    }
     
     [HttpGet("{id}")]
     [Authorize(Roles="Admin")]
     public async Task<ActionResult<OrderViewModel>> GetOrderAsync(int id)
     {
         var order = await _orderService.GetOrderAsync(id);
-        return Ok(order);
-    }
-    
-    [HttpGet("customer/{id}")]
-    [Authorize(Roles="Customer")]
-    public async Task<ActionResult<OrderViewModel>> GetCompletedOrdersByUserId(int id)
-    {
-        var order = await _orderService.GetCustomersCompletedOrdersAsync(id);
         return Ok(order);
     }
     
