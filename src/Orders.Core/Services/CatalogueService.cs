@@ -30,7 +30,7 @@ public class CatalogueService : ICatalogueService
         //TODO Reimplement appSettings configuration
         // Get the gRPC server URL from appsettings.json
         // var grpcServerUrl = _configuration.GetValue<string>("GrpcServer:Url");
-        const string grpcServerUrl = "http://localhost:5122";
+        const string grpcServerUrl = "mtogo-restaurant-grpc:8082";
 
         using var channel = GrpcChannel.ForAddress(grpcServerUrl!);
         var client = new Catalogue.CatalogueClient(channel);
