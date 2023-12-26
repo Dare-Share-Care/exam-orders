@@ -21,7 +21,7 @@ services:
       context: .
       dockerfile: src/Orders.Grpc/Dockerfile
     ports:
-      - "8086:80"
+      - "8001:8000"
     networks:
       - kafka
 

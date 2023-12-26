@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Orders.Core.Interfaces;
 using Orders.Core.Services;
@@ -29,6 +30,12 @@ builder.Services.AddScoped<IKafkaProducer, KafkaProducer>();
 
 // Add services to the container.
 builder.Services.AddGrpc();
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    // Setup a HTTP/2 endpoint without TLS.
+    options.ListenAnyIP(8000, o => o.Protocols = HttpProtocols.Http2);
+});
 
 
 var app = builder.Build();
