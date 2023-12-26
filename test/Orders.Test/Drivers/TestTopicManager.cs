@@ -5,7 +5,7 @@ namespace Orders.Test.Drivers;
 
 public static class TestTopicManager
 {
-    private const string BootstrapServers = "localhost:9092";
+    private const string BootstrapServers = "kafka:9092";
     
    //Create test topic
     public static async Task CreateTopic(string topic)
