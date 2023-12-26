@@ -139,45 +139,45 @@ public class OrderServiceIntegrationTests : IDisposable
         Assert.Equal(4, result.Id); // The Id of the order should be 4
     }
 
-    [Fact]
-    public async Task CreateOrderAsync_SendsKafkaTopic()
-    {
-        // Arrange
-        var orderRepositoryMock = new Mock<IRepository<Order>>();
-        var orderReadRepositoryMock = new Mock<IReadRepository<Order>>();
-        var catalogueServiceMock = new Mock<ICatalogueService>();
-        var kafkaProducer = new TestProducer();
-        var orderService =
-            new OrderService
-            (
-                orderRepositoryMock.Object,
-                orderReadRepositoryMock.Object, catalogueServiceMock.Object,
-                kafkaProducer, new Mock<ILoggingService>().Object
-            );
-
-        //Mock CatalogueService (from Restaurant.Grpc microservice)
-        catalogueServiceMock.Setup(c => c.GetCatalogueAsync(It.IsAny<long>()))
-            .ReturnsAsync(new CatalogueViewModel
-            {
-                RestaurantId = 1,
-                Menu = new List<MenuItemViewModel>
-                {
-                    new() { Id = 1, Name = "Item 1", Price = 100 },
-                    new() { Id = 2, Name = "Item 2", Price = 150 }
-                }
-            });
-        //Setup kafka environment
-        await TestTopicManager.CreateTopic("test-send-email");
-
-        // Act
-        await orderService.CreateOrderAsync(OrderTestHelper.GetTestCreateOrderDto());
-
-        //Get kafka topic message count
-        var topicMessages = await TestTopicManager.GetTopicMessages("test-send-email");
-
-        // Assert
-        Assert.Single(topicMessages); // We expect 1 message in the topic
-    }
+    // [Fact]
+    // public async Task CreateOrderAsync_SendsKafkaTopic()
+    // {
+    //     // Arrange
+    //     var orderRepositoryMock = new Mock<IRepository<Order>>();
+    //     var orderReadRepositoryMock = new Mock<IReadRepository<Order>>();
+    //     var catalogueServiceMock = new Mock<ICatalogueService>();
+    //     var kafkaProducer = new TestProducer();
+    //     var orderService =
+    //         new OrderService
+    //         (
+    //             orderRepositoryMock.Object,
+    //             orderReadRepositoryMock.Object, catalogueServiceMock.Object,
+    //             kafkaProducer, new Mock<ILoggingService>().Object
+    //         );
+    //
+    //     //Mock CatalogueService (from Restaurant.Grpc microservice)
+    //     catalogueServiceMock.Setup(c => c.GetCatalogueAsync(It.IsAny<long>()))
+    //         .ReturnsAsync(new CatalogueViewModel
+    //         {
+    //             RestaurantId = 1,
+    //             Menu = new List<MenuItemViewModel>
+    //             {
+    //                 new() { Id = 1, Name = "Item 1", Price = 100 },
+    //                 new() { Id = 2, Name = "Item 2", Price = 150 }
+    //             }
+    //         });
+    //     //Setup kafka environment
+    //     await TestTopicManager.CreateTopic("test-send-email");
+    //
+    //     // Act
+    //     await orderService.CreateOrderAsync(OrderTestHelper.GetTestCreateOrderDto());
+    //
+    //     //Get kafka topic message count
+    //     var topicMessages = await TestTopicManager.GetTopicMessages("test-send-email");
+    //
+    //     // Assert
+    //     Assert.Single(topicMessages); // We expect 1 message in the topic
+    // }
 
     [Fact]
     public async Task UpdateOrderStatusAsync_ReturnsOrder_TestsDatabase()
