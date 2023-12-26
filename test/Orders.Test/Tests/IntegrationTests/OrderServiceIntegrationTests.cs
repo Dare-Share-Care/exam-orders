@@ -179,6 +179,7 @@ public class OrderServiceIntegrationTests : IDisposable
     //     Assert.Single(topicMessages); // We expect 1 message in the topic
     // }
 
+    
     [Fact]
     public async Task UpdateOrderStatusAsync_ReturnsOrder_TestsDatabase()
     {
