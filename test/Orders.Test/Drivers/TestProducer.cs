@@ -7,7 +7,7 @@ namespace Orders.Test.Drivers;
 public class TestProducer : IKafkaProducer
 {
     private readonly IProducer<string, string> _producer;
-    private const string BootstrapServers = "kafka:9092";
+    private const string BootstrapServers = "kafka:9093";
 
     public TestProducer()
     {

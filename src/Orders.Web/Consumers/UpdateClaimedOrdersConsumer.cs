@@ -8,7 +8,7 @@ namespace Orders.Web.Consumers
 {
     public class UpdatedClaimedOrdersConsumer : BackgroundService
     {
-        private const string BootstrapServers = "kafka:9092";
+        private const string BootstrapServers = "kafka:9093";
         private const string GroupId = "mtogo-claimed-deliveries-group";
         private const string Topic = "mtogo-claimed-deliveries";
 

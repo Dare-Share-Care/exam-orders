@@ -11,6 +11,8 @@ services:
       - "8085:80"
     networks:
       - kafka
+    expose:
+      - "8000"
         
   mtogo.orders.grpc:
     container_name: mtogo-orders-grpc
