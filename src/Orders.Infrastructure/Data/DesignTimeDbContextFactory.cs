@@ -9,7 +9,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<OrderConte
     {
         //TODO: Move connection string to appsettings.json
         var optionsBuilder = new DbContextOptionsBuilder<OrderContext>();
-        optionsBuilder.UseSqlServer("Server=mssql;Database=MTOGOOrders;User Id=sa;Password=thisIsSuperStrong1234;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Server=mssql-orders;Database=MTOGOOrders;User Id=sa;Password=thisIsSuperStrong1234;TrustServerCertificate=True");
 
         return new OrderContext(optionsBuilder.Options);
     }
