@@ -25,6 +25,14 @@ public class OrderController : ControllerBase
         return Ok(orders);
     }
     
+    [HttpGet("ready-for-delivery")]
+    [Authorize(Roles="Courier")]
+    public async Task<ActionResult<List<OrderViewModel>>> GetOrdersReadyForDeliveryAsync()
+    {
+        var orders = await _orderService.GetInProgressOrdersAsync();
+        return Ok(orders);
+    }
+    
     [HttpGet("{id}")]
     [Authorize(Roles="Admin")]
     public async Task<ActionResult<OrderViewModel>> GetOrderAsync(int id)
