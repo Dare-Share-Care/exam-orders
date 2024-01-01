@@ -10,6 +10,7 @@ using Orders.Infrastructure.Data;
 using Orders.Infrastructure.Interfaces.Producers;
 using Orders.Infrastructure.Interfaces;
 using Orders.Infrastructure.Producers;
+using Prometheus;
 
 const string policyName = "AllowOrigin";
 
@@ -93,6 +94,14 @@ app.UseAuthentication();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseMetricServer();
+app.UseHttpMetrics();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.UseHttpsRedirection();
 
